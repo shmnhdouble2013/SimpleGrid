@@ -1,0 +1,14 @@
+{
+    "name": "tmSimpleGrid",
+    "version": "1.0",
+    "desc": "简单好用的Grid组件",
+    "cover": "",
+    "tag":"标记",
+    "author": {
+        "name": "huangjia",
+        "email": "wb_jia.huangj",
+        "page": ""
+    },
+    "type": "kissy-gallery",
+    "type-url": "http://gallery.kissyui.com/guide"
+}
