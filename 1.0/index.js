@@ -1295,3 +1295,4 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 return TmSimpleGrid;
 
 }, {'requires':['xtemplate', './store', './pagination/pagination', './uicommon', 'sizzle', './grid.css']}); 
+
