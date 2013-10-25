@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>tmSimpleGrid的demo</title>
+    <script src="http://g.tbcdn.cn/kissy/k/1.3.2/kissy.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="http://g.tbcdn.cn/kissy/k/1.3.2/css/dpl/base-min.css">
+</head>
+<body>
+<h2> tmSimpleGrid的demo 示例:</h2>
+
+	<!-- 表格选中模板 -->
+	<div id="J_selectCandTable"></div>	
+
+  
+
+<script>
+// 候选区 选中数据
+        var selectData = [
+            {"nos":52, "id":"fa32f3a2f5", "actype":"站外", "medianame":"youku.com", "time":5343543758045},
+            {"nos":71, "id":"faf262f6a66_1", "actype":"站外7", "medianame":"youku7.com","time":5343545453758584},
+            {"nos":11, "id":"afa266969fa_2", "actype":"站外11", "medianame":"youku11.com","time":5343944754584 }, 
+
+            {"nos":17, "id":"fa32f3a2f7", "actype":"站外", "medianame":"youku.com","time":5345932604584},
+            {"nos":1, "id":"111111111111111.09", "actype":"站外", "medianame":"youku.com", "time":5343543758584},
+            {"nos":2, "id":"222222222222222", "actype":"我是", "medianame":"yahoo.com", "time":54542375684584},
+
+            {"nos":6, "id":"666666666666666", "actype":"黄蜂", "medianame":"juhuasuan.com", "time":545474658484},
+            {"nos":4, "id":"444444444444444", "actype":"甜心", "medianame":"alibaba.com", "time":5234454758584},
+            {"nos":5, "id":"555555555555555", "actype":"过我", "medianame":"taobao.com", "time":5454756784584},  
+
+            {"nos":7, "id":"777777777777777.8653", "actype":"口味", "medianame":"qiyi.com", "time":545475123584},
+            {"nos":8, "id":"888888888888888", "actype":"不会", "medianame":"baidu.com", "time":5454766584584},
+            {"nos":10, "id":"00000000000000", "actype":"后再", "medianame":"sina.com", "time":54546575584}
+        ];
+
+    var S = KISSY;
+
+    S.Config.debug = true;
+
+    if (S.Config.debug) {
+        var srcPath = "../../";  // "./";
+
+        S.config({
+            packages:[
+                {
+                    name:"gallery",
+                    path:srcPath,
+                    charset:"utf-8",
+                    ignorePackageNameInUri:true
+                }
+            ]
+        });
+    }
+
+    S.use('gallery/tmSimpleGrid/1.0/index', function (S, TmSimpleGrid) {
+    
+          new TmSimpleGrid('#J_selectCandTable', {	
+            
+                width:"1000px",									// 强制设定 表格 高度 1000 or '1000px' 或者 设置'auto' 自适应
+                // height:400,									
+
+                // ajaxUrl: 'result.php', 						// 异步接口 result.php   result_jsonp.php
+                // isJsonp: false,								// 是否 为jsonp 默认为false	
+
+                staticData: selectData, 						// table 静态数据，当ajaxUrl同时存在时候，优先异步数据
+
+                // isLocalSort: false, 							// 是否本地排序，默认本地排序 --  另外，开启排序列请在下面columns里配置sortable, 以及指定dataType 排序数据类型
+          
+                checkable: true,								// 是否 开启 复选框 checkbox ---- 默认 false 不显示 ，注意 次配置不开启则 isShowCheckboxText 显示文字无效
+                isShowCheckboxText: true, 						// 是否 显示 checkbox 序号 和 表头 全选文字， 默认 false 不显示
+                  
+                pageSize:3, 									// 分页大小  默认10条/页
+                                                                // 关于分页： 异步 默认 后端 分页数据，若为静态数据 则自动 前端 本地分页 
+                columns: [
+                  {title: 'id', width: '150px', sortable: true, dataType: 'float', dataIndex: 'id'},
+                  {title: '活动类型',width: 'auto', sortable: true, dataType: 'string', dataIndex: 'actype'},
+                  {title: '媒体名称',width: 'auto', sortable: false, dataType: 'string', dataIndex: 'medianame'},
+                  {title: '时间',width: 'auto', sortable: false, dataType: 'int', dataIndex: 'time', renderer: S.TL.datetimeRenderer},					
+                  {title: '操作', width: '.', sortable: false, dataIndex: '', renderer: function(value, obj){ 
+                    // 操作 标示 command-btn
+                    return '<a href="javascript:void(0)" class="command-btn">编辑</a>';
+                  }}
+                ] 
+          });
+    })
+</script>
+</body>
+</html>
