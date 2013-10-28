@@ -60,7 +60,7 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 		TBODYCLS = '.j_tbody',						// tbody css 钩子
 		TFOOTCLS = '.j_tfoot',						// tfoot css 钩子
 
-		CLS_HIDDEN = '.cls-hide', 					// 是否隐藏 列 隐藏钩子
+		CLS_HIDDEN = 'cls-hide', 					// 是否隐藏 列 隐藏钩子 
 
 		GRIDTPL = 									
 			'<div class="table-container j_tableContent">'+
@@ -316,16 +316,9 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 		_init: function(){
 			var _self = this;
 
-			_self._augmsConfig();
 			_self._initStore();	
 			_self._initGrid();
 			_self._eventRender();
-		},
-
-		// 参数初始化
-		_augmsConfig: function(){
-			var _self = this;
-			
 		},
 
 		// 事件初始化 -- click -- mouseout -- mouseover
@@ -358,27 +351,89 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 				_self.fire('afterPageChanged', _self.store.pageInfo);
 			});	
 
-
 			// 行选中 vs 全选 自动匹配 
 			_self.on('rowselected rowunselected', function(ev){
 				_self.autoSelect(ev);
 			});	
 
-			// 纵向出现 滚动条 	
-			// Event.on('', '', function(){
-			// 	_self.();
-			// });
-
-
 			// ie 下 移除 a标签 和 input 默认虚线框		
-			Event.delegate(_self.table, 'click', 'a', function(){
-				this.blur();
+			Event.delegate(_self.thead, 'click', 'a', function(ev){
+				_self._forIeline(ev);
 			});
-			Event.delegate(_self.table, 'click', 'input', function(){
-				this.blur();
+			Event.delegate(_self.tbodyContainer, 'click', 'input', function(ev){
+				_self._forIeline(ev);
 			});
 		},
+
+		// ie失焦 去掉虚线
+		_forIeline: function(ev){
+			var _self = this;
+
+			if(!ev){
+				return;
+			}
+
+			var tag = ev.target;
+			tag.blur();
+		},
+
+		// 纵向滚动条 处理
+		_topScrollFn: function(){
+			var _self = this;
+
+			_self.lastTh = S.Node(_self.thead).first().last('th'); 
+			_self.lastThWidth = _self.lastTh.width();
+
+			setInterval(function(){
+				_self._scrollRender();
+			}, 200);
+		},
+
+		// 监控 纵向滚动条问题
+		_scrollRender: function(){
+			var _self = this,				
+				hasScrollTop = _self.isScrollTop(_self.tbodyContainer);
+
+			// ie 6-7 不添加修正值	
+			if(UA.trident && UA.ie <= 7){
+				return;
+			}	
+
+			if(hasScrollTop){
+				DOM.css(_self.lastTh, "width", _self.lastThWidth + 13 + 'px');
+			}else{
+				DOM.css(_self.lastTh, "width", _self.lastThWidth + 'px');
+			}	
+		},
+
+		// 是否出现 纵向 滚动条
+		isScrollTop: function(docRange){
+			var _self = this,
+				isCrollTop = false,
+				docRange = docRange ? docRange : null;
+
+			docRange = S.get(docRange);
+				
+			if(!docRange){
+				return;
+			}
+
+			var containerHeight = DOM.height(docRange),
+				containerWeight = DOM.width(docRange),
+				scrollLeft = DOM.scrollLeft(docRange),
+				scrollTop = DOM.scrollTop(docRange),
+				scrollHeight = docRange.scrollHeight,
+				scrollWidth = docRange.scrollWidth;
+
+			if(containerHeight < scrollHeight &&　scrollTop >=0){
+				isCrollTop = true;
+			}	
+
+			return isCrollTop;
+		},
 		
+
+
 		// 初始化 table Dom 结构
 		_initTableDom: function(data){
 			var _self = this,
@@ -417,15 +472,6 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 			// 放入Dom树中
 			DOM.append(_self.table, _self.container);
 		},		
-
-
-		// 纵向出现 滚动条 
-		_alignTableHead: function(){
-			var _self = this;
-
-
-		},
-
 
 		// 翻页 
 		_pageChange: function(e){
@@ -600,13 +646,16 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 		},
 
 		sortableFn: function(ev){
-			var _self = this,
+			var _self = this,				
 				direction = '',
 				itagIndex = DOM.first(ev, 'i'),
 				field = DOM.attr(ev, 'data-field'),
 				cssCls = DOM.attr(itagIndex, 'class'),
 				dataType = DOM.attr(ev, 'data-dataType'),
-				isSort = DOM.hasClass(itagIndex, DRECTION_TAGS);
+				isSort = DOM.hasClass(itagIndex, DRECTION_TAGS);	
+
+			var isAllRowsSelected = _self._isAllRowsSelected(),
+				selectAry = _self.getSelection();	
 				
 			if(!isSort){
 				return;
@@ -627,6 +676,14 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 				DOM.removeClass(tag, DRECTION_DSC);
 			});			
 			DOM.addClass(itagIndex, direction);
+
+			// 回显 排序前 数据全选
+			if(isAllRowsSelected){
+				_self._setAllRowsSelected(true);
+			}else{
+				_self._setHeaderChecked(false);
+				_self._setDataSelect(selectAry, true);
+			}
 		},
 		
 		// 根据路径 获取对象值
@@ -698,6 +755,9 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 			if (height) { 			
 				_self.setHeight(height);
 			}
+
+			// 纵向滚动条
+			_self._topScrollFn();
 		},
 		
 		// 初始化Store jsonp
@@ -776,7 +836,7 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 		setWidth: function(width){
 			var _self = this,				
 				outerWidth = DOM.width(_self.container), 
-				width = parseInt( _self.setPxCheck(width) );
+				width = parseInt( _self.setPxCheck(width), 10);
 				
 			if(width ){ // && width >= outerWidth
 				DOM.css(_self.table, 'width', width+'px' );
@@ -787,13 +847,13 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 		setHeight: function(height){
 			var _self = this,
 				tbodyContainer = S.get('.tbody-container', _self.container), 
-				theadHeight = DOM.height(_self.thead), 
-				tfootHeight = DOM.height(_self.tfoot), 
-				height = parseInt( _self.setPxCheck(height) ),
-				height = height - theadHeight - tfootHeight;
+				theadHeight = DOM.outerHeight(_self.thead), 
+				tfootHeight = DOM.outerHeight(_self.tfoot), 
+				parseHeight = parseInt( _self.setPxCheck(height), 10),
+				tbodyHeight = parseHeight-(theadHeight + tfootHeight + 7);
 
-			if(height>0){ //  && height >= outerHeight
-				DOM.css(tbodyContainer, 'height', height+'px' );
+			if(tbodyHeight>0){ //  && height >= outerHeight
+				DOM.css(tbodyContainer, 'height', tbodyHeight+'px' );
 			}	
 			_self.tbodyContainer = tbodyContainer;
 		},
@@ -807,23 +867,24 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 				return; 
 			}
 
-			// 如果等于auto
-			if(S.trim(px) === endVaue){
-				return endVaue;
-			}
-
+			// 数字值: 500 || 字符串值: 'auto' || '500px'
 			if(S.isNumber(px)){
 				endVaue = px+'px';
 			}else if(S.isString(px)){
-
 				var isPercentage = px.split('%'),
 					hasPx = px.split('px');
 
+				// 如果等于auto
+				if(px === endVaue){
+					return endVaue;
+				}	
+
+				// 百分比宽度
 				if(isPercentage.length>1){
 					console.log('The percentage of CSS values is not supported!'); 
 					return;
 				}	
-
+				// 字符串像素值
 				if(hasPx.length>1){					
 					endVaue = px;
 				}
@@ -895,7 +956,6 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
                 _self._setAllRowsSelected(target.checked);
 			}
 		},
-		
 				
 		// 查找 row
 		_findRow: function (element) {
@@ -1110,7 +1170,7 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
     	},
 		
 		/**
-		* 取消选中的记录 
+		* 取消 当前页面 所有 选中 状态 
 		*/
 		clearSelection : function(){
 			var _self = this;
@@ -1125,9 +1185,11 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 			var _self = this,
 				checkEl = S.one('.'+SELECTALLCLS, _self.thead);
 			
-			if(checkEl) {
-				checkEl.attr('checked', checked);
+			if(!checkEl) {
+				return 'checkbox Element is undefined!';
 			}
+			
+			checkEl.attr('checked', checked);
 		},
 		
 		//设置row 全选
@@ -1295,4 +1357,12 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 return TmSimpleGrid;
 
 }, {'requires':['xtemplate', './store', './pagination/pagination', './uicommon', 'sizzle', './grid.css']}); 
+
+/**
+* 已知问题：
+* 当表格高度 大于容器指定 高度 出现滚动条，导致的 th标题 与 td内容 对齐 存在 15左右像素偏差 -- 修复
+* 排序 后 全选 回显 问题
+* 当动态隐藏 某列 时候 存在 th td 对齐偏差
+* 
+**/
 

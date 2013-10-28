@@ -1,17 +1,17 @@
 /**
-* Êı¾İ»º³åÀà£¬»º´æÊı¾İÔÚä¯ÀÀÆ÷ÖĞ
-* @class Êı¾İ»º³åÀà
-* @param {Object} config ÅäÖÃÏî£¬storeÉÏÃæµÄfield×Ö¶Î¿ÉÒÔ´«ÈëÅäÖÃÏîÖĞ
-* @property {String} url ÊÇ×Ö¶Î proxy.urlµÄ¼òĞ´·½Ê½£¬¿ÉÒÔÖ±½ÓĞ´ÔÚÅäÖÃĞÅÏ¢ÖĞ
+* æ•°æ®ç¼“å†²ç±»ï¼Œç¼“å­˜æ•°æ®åœ¨æµè§ˆå™¨ä¸­
+* @class æ•°æ®ç¼“å†²ç±»
+* @param {Object} config é…ç½®é¡¹ï¼Œstoreä¸Šé¢çš„fieldå­—æ®µå¯ä»¥ä¼ å…¥é…ç½®é¡¹ä¸­
+* @property {String} url æ˜¯å­—æ®µ proxy.urlçš„ç®€å†™æ–¹å¼ï¼Œå¯ä»¥ç›´æ¥å†™åœ¨é…ç½®ä¿¡æ¯ä¸­
 * @example 
 * var store = new Store({
 *	url : 'data.php'
-	root: 'rows',  // ¸ùÄ¿Â¼
-	totalProperty: 'results',  // Êı¾İÌõÊı
-	proxy: {url : 'data.php', method: 'get' } //°´ÕÕ'name' ×Ö¶Î½µĞòÅÅĞò
-	params: {id:'124', type:1}//×Ô¶¨Òå²ÎÊı
+	root: 'rows',  // æ ¹ç›®å½•
+	totalProperty: 'results',  // æ•°æ®æ¡æ•°
+	proxy: {url : 'data.php', method: 'get' } //æŒ‰ç…§'name' å­—æ®µé™åºæ’åº
+	params: {id:'124', type:1}//è‡ªå®šä¹‰å‚æ•°
 	
-	matchFunction  // ¶ÔÏóÆ¥Åäº¯Êı	
+	matchFunction  // å¯¹è±¡åŒ¹é…å‡½æ•°	
 	
 *	resultRows : [],
 *	newRecords : [],
@@ -37,7 +37,7 @@ KISSY.add(function(S){
 		/** @lends Store.prototype */	
 		{
 			/**
-			* ¼ÓÔØÊı¾İÊ±£¬·µ»ØÊı¾İµÄ¸ùÄ¿Â¼
+			* åŠ è½½æ•°æ®æ—¶ï¼Œè¿”å›æ•°æ®çš„æ ¹ç›®å½•
 			* @field
 			* @type String
 			* @default  "rows"
@@ -47,7 +47,7 @@ KISSY.add(function(S){
 			root: 'rows', 
 
 			/**
-			* ¼ÓÔØÊı¾İÊ±£¬·ûºÏÌõ¼şµÄÊı¾İ×ÜÊı£¬ÓÃÓÚ Ç°¶Ë ·ÖÒ³
+			* åŠ è½½æ•°æ®æ—¶ï¼Œç¬¦åˆæ¡ä»¶çš„æ•°æ®æ€»æ•°ï¼Œç”¨äº å‰ç«¯ åˆ†é¡µ
 			* @field
 			* @type String
 			* @default  "results"
@@ -58,23 +58,23 @@ KISSY.add(function(S){
 			totalProperty: 'results', 
 
 			/**
-			* ÅÅĞòĞÅÏ¢ 
-			* @field 2¸ö×Ö¶Î -- ÅÅĞò×Ö¶Î¡¢ÅÅĞò·½Ïò
+			* æ’åºä¿¡æ¯ 
+			* @field 2ä¸ªå­—æ®µ -- æ’åºå­—æ®µã€æ’åºæ–¹å‘
 			* @type Object
 			* @default { field: '', direction: 'ASC' }
 			* @example 
 			* var store = new Store({
 			*		url : 'data.php',
-			*		sortInfo: { field: 'name', direction: 'DESC' }//°´ÕÕ'name' ×Ö¶Î½µĞòÅÅĞò
+			*		sortInfo: { field: 'name', direction: 'DESC' }//æŒ‰ç…§'name' å­—æ®µé™åºæ’åº
 			*	});
 			*/
 			sortInfo: { field: '', direction: 'ASC', dataType:'string'},
 
 			/**
-			* ajax config °üº¬3¸ö×Ö¶Î:
-			* url : Êı¾İµÄurl
-			* method : Êı¾İµÄ·½Ê½"get","post"£¬Ä¬ÈÏÖµÎª"post"
-			* dataType: Êı¾İ·µ»ØµÄ¸ñÊ½,Ä¿Ç°Ö»Ö§³Ö"json¡¢jsonp"¸ñÊ½(´ËÖÖÇé¿öÏÂ Ç¿ÖÆ methodÎª get·½Ê½  )
+			* ajax config åŒ…å«3ä¸ªå­—æ®µ:
+			* url : æ•°æ®çš„url
+			* method : æ•°æ®çš„æ–¹å¼"get","post"ï¼Œé»˜è®¤å€¼ä¸º"post"
+			* dataType: æ•°æ®è¿”å›çš„æ ¼å¼,ç›®å‰åªæ”¯æŒ"jsonã€jsonp"æ ¼å¼(æ­¤ç§æƒ…å†µä¸‹ å¼ºåˆ¶ methodä¸º getæ–¹å¼  )
 			* @field 
 			* @type Object
 			* @default { method: 'post', dataType: 'json', url:null }
@@ -88,19 +88,19 @@ KISSY.add(function(S){
 			proxy: { url:null, method: 'post', dataType: 'json' },
 
 			/**
-			* ×Ô¶¨Òå²ÎÊı£¬ÓÃÓÚ¼ÓÔØÊı¾İÊ±·¢ËÍµ½ºóÌ¨
+			* è‡ªå®šä¹‰å‚æ•°ï¼Œç”¨äºåŠ è½½æ•°æ®æ—¶å‘é€åˆ°åå°
 			* @field
 			* @type Object
 			* @example
 			* var store = new Store({
 			*		url :'data',
-			*		params: {id:'124',type:1}//×Ô¶¨Òå²ÎÊı
+			*		params: {id:'124',type:1}//è‡ªå®šä¹‰å‚æ•°
 			*	});
 			*/
 			params:{},
 
 			/**
-			* ÊÇ·ñºó¶ËÅÅĞò£¬Èç¹ûÎªºó¶ËÅÅĞò£¬Ã¿´ÎÅÅĞò·¢ËÍĞÂÇëÇó£¬·ñÔò£¬Ö±½ÓÇ°¶ËÅÅĞò -- Ä¬ÈÏ Ç°¶ËÅÅĞò
+			* æ˜¯å¦åç«¯æ’åºï¼Œå¦‚æœä¸ºåç«¯æ’åºï¼Œæ¯æ¬¡æ’åºå‘é€æ–°è¯·æ±‚ï¼Œå¦åˆ™ï¼Œç›´æ¥å‰ç«¯æ’åº -- é»˜è®¤ å‰ç«¯æ’åº
 			* @field 
 			* @type Boolean
 			* @default true
@@ -108,21 +108,21 @@ KISSY.add(function(S){
 			localSort: true,
 
 			/**
-			* josn Êı¾İ - ¸ù¾İ Ö¸¶¨×Ö¶Î ÑéÖ¤2ÌõÊı¾İÊÇ·ñÏàÍ¬
+			* josn æ•°æ® - æ ¹æ® æŒ‡å®šå­—æ®µ éªŒè¯2æ¡æ•°æ®æ˜¯å¦ç›¸åŒ
 			* @ field string
 			* @ default 'id'
 			*/
 			dataField: 'id', 
 
 			/**
-			* ·ÖÒ³ĞÅÏ¢ pageInfo {currentPage:'µ±Ç°Ò³', limit:'·ÖÒ³´óĞ¡', totalPage:'×ÜÒ³Êı'' }
+			* åˆ†é¡µä¿¡æ¯ pageInfo {currentPage:'å½“å‰é¡µ', limit:'åˆ†é¡µå¤§å°', totalPage:'æ€»é¡µæ•°'' }
 			* @param {string} 
 			* @return {}
 			*/
 			pageInfo: {currentPage: 1, limit: 10, totalPage: 3},
 			
 			/**
-			* ÊÇ·ñºó¶Ë·ÖÒ³Êı¾İ£¬Èç¹ûÊÇÔòÃ¿´Î ·ÖÒ³ ·¢ËÍĞÂÇëÇó£¬·ñÔò£¬Ö±½ÓÇ°¶Ë·ÖÒ³ -- Ä¬ÈÏºó¶Ë·ÖÒ³
+			* æ˜¯å¦åç«¯åˆ†é¡µæ•°æ®ï¼Œå¦‚æœæ˜¯åˆ™æ¯æ¬¡ åˆ†é¡µ å‘é€æ–°è¯·æ±‚ï¼Œå¦åˆ™ï¼Œç›´æ¥å‰ç«¯åˆ†é¡µ -- é»˜è®¤åç«¯åˆ†é¡µ
 			* @field 
 			* @type Boolean
 			* @default true
@@ -131,7 +131,7 @@ KISSY.add(function(S){
 
 
 			/**
-			* ÊÇ·ñÓĞ·ÖÒ³-- Ä¬ÈÏÓĞ
+			* æ˜¯å¦æœ‰åˆ†é¡µ-- é»˜è®¤æœ‰
 			* @field 
 			* @type Boolean
 			* @default true
@@ -149,13 +149,13 @@ KISSY.add(function(S){
 			disableRecords : [],
 			rowCount : 0,
 			totalCount : 0,
-			totalData : [] // resultÊı¾İÔİ´æ
+			totalData : [] // resultæ•°æ®æš‚å­˜
 		});
 
-		//ÉùÃ÷Ö§³ÖµÄÊÂ¼ş
+		//å£°æ˜æ”¯æŒçš„äº‹ä»¶
 		_self.events = [
 			/**  
-			* Êı¾İ½ÓÊÜ¸Ä±ä£¬ËùÓĞÔö¼Ó¡¢É¾³ı¡¢ĞŞ¸ÄµÄÊı¾İ¼ÇÂ¼Çå¿Õ
+			* æ•°æ®æ¥å—æ”¹å˜ï¼Œæ‰€æœ‰å¢åŠ ã€åˆ é™¤ã€ä¿®æ”¹çš„æ•°æ®è®°å½•æ¸…ç©º
 			* @name Store#acceptchanges
 			* @event  
 			*/
@@ -163,98 +163,98 @@ KISSY.add(function(S){
 
 
 			/**  
-			* µ±Êı¾İ¼ÓÔØÍê³Éºó
+			* å½“æ•°æ®åŠ è½½å®Œæˆå
 			* @name Store#load  
 			* @event  
-			* @param {event} e  ÊÂ¼ş¶ÔÏó£¬°üº¬¼ÓÔØÊı¾İÊ±µÄ²ÎÊı
+			* @param {event} e  äº‹ä»¶å¯¹è±¡ï¼ŒåŒ…å«åŠ è½½æ•°æ®æ—¶çš„å‚æ•°
 			*/
 			'load',
 
 			/**  
-			* µ±Êı¾İ¼ÓÔØÇ°
+			* å½“æ•°æ®åŠ è½½å‰
 			* @name Store#beforeload
 			* @event  
 			*/
 			'beforeload',
 
 			/**  
-			* ·¢ÉúÔÚ£¬beforeloadºÍloadÖĞ¼ä£¬Êı¾İÒÑ¾­»ñÈ¡Íê³É£¬µ«ÊÇ»¹Î´´¥·¢loadÊÂ¼ş£¬ÓÃÓÚ»ñÈ¡·µ»ØµÄÔ­Ê¼Êı¾İ
+			* å‘ç”Ÿåœ¨ï¼Œbeforeloadå’Œloadä¸­é—´ï¼Œæ•°æ®å·²ç»è·å–å®Œæˆï¼Œä½†æ˜¯è¿˜æœªè§¦å‘loadäº‹ä»¶ï¼Œç”¨äºè·å–è¿”å›çš„åŸå§‹æ•°æ®
 			* @name Store#beforeProcessLoad
 			* @event  
-			* @param {event} e  ÊÂ¼ş¶ÔÏó
-			* @param {Object} e.data ´Ó·şÎñÆ÷¶Ë·µ»ØµÄÊı¾İ
+			* @param {event} e  äº‹ä»¶å¯¹è±¡
+			* @param {Object} e.data ä»æœåŠ¡å™¨ç«¯è¿”å›çš„æ•°æ®
 			*/
 			'beforeProcessLoad',
 			
 			/**  
-			* µ±Ìí¼ÓÊı¾İÊ±´¥·¢¸ÃÊÂ¼ş
+			* å½“æ·»åŠ æ•°æ®æ—¶è§¦å‘è¯¥äº‹ä»¶
 			* @name Store#addrecords  
 			* @event  
-			* @param {event} e  ÊÂ¼ş¶ÔÏó
-			* @param {Array} e.data Ìí¼ÓµÄÊı¾İ¼¯ºÏ
+			* @param {event} e  äº‹ä»¶å¯¹è±¡
+			* @param {Array} e.data æ·»åŠ çš„æ•°æ®é›†åˆ
 			*/
 			'addrecords',
 
 			/**
-			* Å×³öÒì³£Ê±ºò
+			* æŠ›å‡ºå¼‚å¸¸æ—¶å€™
 			*/
 			'exception',
 
 
 			/**  
-			* µ±É¾³ıÊı¾İÊÇ´¥·¢¸ÃÊÂ¼ş
+			* å½“åˆ é™¤æ•°æ®æ˜¯è§¦å‘è¯¥äº‹ä»¶
 			* @name Store#removerecords  
 			* @event  
-			* @param {event} e  ÊÂ¼ş¶ÔÏó
-			* @param {Array} e.data É¾³ıµÄÊı¾İ¼¯ºÏ
+			* @param {event} e  äº‹ä»¶å¯¹è±¡
+			* @param {Array} e.data åˆ é™¤çš„æ•°æ®é›†åˆ
 			*/
 			'removerecords',
 			
 			/**  
-			* µ±¸üĞÂÊı¾İÖ¸¶¨×Ö¶ÎÊ±´¥·¢¸ÃÊÂ¼ş
+			* å½“æ›´æ–°æ•°æ®æŒ‡å®šå­—æ®µæ—¶è§¦å‘è¯¥äº‹ä»¶
 			* @name Store#updaterecord  
 			* @event  
-			* @param {event} e  ÊÂ¼ş¶ÔÏó
-			* @param {Object} e.record ¸üĞÂµÄÊı¾İ
-			* @param {Object} e.field ¸üĞÂµÄ×Ö¶Î
-			* @param {Object} e.value ¸üĞÂµÄÖµ
+			* @param {event} e  äº‹ä»¶å¯¹è±¡
+			* @param {Object} e.record æ›´æ–°çš„æ•°æ®
+			* @param {Object} e.field æ›´æ–°çš„å­—æ®µ
+			* @param {Object} e.value æ›´æ–°çš„å€¼
 			*/
 			'updaterecord',
 
 			/**  
-			* Ç°¶Ë·¢ÉúÅÅĞòÊ±´¥·¢
+			* å‰ç«¯å‘ç”Ÿæ’åºæ—¶è§¦å‘
 			* @name Store#localsort
 			* @event  
-			* @param {event} e  ÊÂ¼ş¶ÔÏó
-			* @param {Object} e.field ÅÅĞòµÄ×Ö¶Î
-			* @param {Object} e.direction ÅÅĞòµÄ·½Ïò 'ASC'£¬'DESC'
+			* @param {event} e  äº‹ä»¶å¯¹è±¡
+			* @param {Object} e.field æ’åºçš„å­—æ®µ
+			* @param {Object} e.direction æ’åºçš„æ–¹å‘ 'ASC'ï¼Œ'DESC'
 			*/
 			'localsort',
 
 			/**  
-			* µ±½ûÓÃÄ³ÌõÊı¾İÊ±´¥·¢¸ÃÊÂ¼ş
+			* å½“ç¦ç”¨æŸæ¡æ•°æ®æ—¶è§¦å‘è¯¥äº‹ä»¶
 			* @name Store#disableRecords  
 			* @event  
-			* @param {event} e  ÊÂ¼ş¶ÔÏó
-			* @param {Object} e.record ½ûÓÃµÄÊı¾İ¶ÔÏó
+			* @param {event} e  äº‹ä»¶å¯¹è±¡
+			* @param {Object} e.record ç¦ç”¨çš„æ•°æ®å¯¹è±¡
 			*/
 			'disableRecords',
 
 			/**  
-			* µ±½â½ûÄ³ÌõÊı¾İÊ±´¥·¢¸ÃÊÂ¼ş
+			* å½“è§£ç¦æŸæ¡æ•°æ®æ—¶è§¦å‘è¯¥äº‹ä»¶
 			* @name Store#cancelDisableRecords  
 			* @event  
-			* @param {event} e  ÊÂ¼ş¶ÔÏó
-			* @param {Object} e.record ½â½ûµÄÊı¾İ¶ÔÏó
+			* @param {event} e  äº‹ä»¶å¯¹è±¡
+			* @param {Object} e.record è§£ç¦çš„æ•°æ®å¯¹è±¡
 			*/
 			'cancelDisableRecords',
 
 			/**  
-			* ×ÜÒ³Êı¸Ä±ä totalPageChange ÊÂ¼ş
+			* æ€»é¡µæ•°æ”¹å˜ totalPageChange äº‹ä»¶
 			* @name Store#totalPageChange  
 			* @event  
-			* @param {event} e  ÊÂ¼ş¶ÔÏó
-			* @return {obj} ·µ»Ø ·ÖÒ³ĞÅÏ¢ ¶ÔÏó
+			* @param {event} e  äº‹ä»¶å¯¹è±¡
+			* @return {obj} è¿”å› åˆ†é¡µä¿¡æ¯ å¯¹è±¡
 			*/
 			'totalPageChange',
 
@@ -262,8 +262,8 @@ KISSY.add(function(S){
 			* currentPageChanged
 			* @name Store#currentPageChanged  
 			* @event  
-			* @param {event} e  ÊÂ¼ş¶ÔÏó
-			* @return {number} ·µ»Øµ±Ç°Ò³Ãæ
+			* @param {event} e  äº‹ä»¶å¯¹è±¡
+			* @return {number} è¿”å›å½“å‰é¡µé¢
 			*/
 			'currentPageChanged'			  
 		];
@@ -277,7 +277,7 @@ KISSY.add(function(S){
 	/** @lends Store.prototype */	
 	{
 		/**
-		* ½ÓÊÜÊı¾İ¸Ä±ä£¬½«»º´æµÄĞŞ¸Ä¡¢ĞÂÔö¡¢É¾³ı¡¢½ûÓÃµÄ¼¯ºÏÇå³ı
+		* æ¥å—æ•°æ®æ”¹å˜ï¼Œå°†ç¼“å­˜çš„ä¿®æ”¹ã€æ–°å¢ã€åˆ é™¤ã€ç¦ç”¨çš„é›†åˆæ¸…é™¤
 		*/
 		acceptChanges : function(){
 			var _self = this;
@@ -287,10 +287,10 @@ KISSY.add(function(S){
 		},
 		
 		/**
-		* Ìí¼Ó¼ÇÂ¼
-		* @param {Array|Object} data Ìí¼ÓµÄÊı¾İ£¬¿ÉÒÔÊÇÊı×é£¬¿ÉÒÔÊÇµ¥Ìõ¼ÇÂ¼
-		* @param {Boolean} [noRepeat = false] ÊÇ·ñÈ¥ÖØ,¿ÉÒÔÎª¿Õ£¬Ä¬ÈÏ£º false 
-		* @param {Function} [match] Æ¥Åäº¯Êı£¬¿ÉÒÔÎª¿Õ£¬Ä¬ÈÏÊÇ£º<br>
+		* æ·»åŠ è®°å½•
+		* @param {Array|Object} data æ·»åŠ çš„æ•°æ®ï¼Œå¯ä»¥æ˜¯æ•°ç»„ï¼Œå¯ä»¥æ˜¯å•æ¡è®°å½•
+		* @param {Boolean} [noRepeat = false] æ˜¯å¦å»é‡,å¯ä»¥ä¸ºç©ºï¼Œé»˜è®¤ï¼š false 
+		* @param {Function} [match] åŒ¹é…å‡½æ•°ï¼Œå¯ä»¥ä¸ºç©ºï¼Œé»˜è®¤æ˜¯ï¼š<br>
 		*  function(obj1,obj2){
 		*	 return obj1 == obj2;
 		*  }
@@ -310,9 +310,9 @@ KISSY.add(function(S){
 				if(!noRepeat || !_self.contains(element, match)){
 					_self._addRecord(element);
 					newData.push(element);
-					// È«¾Ö - Ôö¼Ó ĞÂÔö ¼ÇÂ¼
+					// å…¨å±€ - å¢åŠ  æ–°å¢ è®°å½•
 					_self.newRecords.push(element);
-					// È«¾Ö - ĞÂÌí¼ÓÊı¾İ Ä¨È¥ ÔÚÉ¾³ı¼ÇÂ¼ - ¸ü¸Ä¼ÇÂ¼ µÄÊı¾İÀúÊ· 
+					// å…¨å±€ - æ–°æ·»åŠ æ•°æ® æŠ¹å» åœ¨åˆ é™¤è®°å½• - æ›´æ”¹è®°å½• çš„æ•°æ®å†å² 
 					_self._removeFrom(element, _self.deletedRecords);
 					_self._removeFrom(element, _self.modifiedRecords);
 					_self._removeFrom(element, _self.disableRecords);
@@ -322,7 +322,7 @@ KISSY.add(function(S){
 		},		
 
 		/**
-		* Çå³ıÊı¾İ,Çå¿ÕËùÓĞÊı¾İ use
+		* æ¸…é™¤æ•°æ®,æ¸…ç©ºæ‰€æœ‰æ•°æ® use
 		*/
 		clear : function(){ 
 			var _self = this;
@@ -330,15 +330,15 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* storeµÄ±È½Ïº¯Êı
-		* @param {Object} obj1 ½øĞĞ±È½ÏµÄ¼ÇÂ¼1
-		* @param {Object} obj2 ½øĞĞ±È½ÏµÄ¼ÇÂ¼2
-		* @param {String} [field] ½øĞĞÅÅĞòµÄ×Ö¶Î,Ä¬ÈÏÎª sortInfo.field
-		* @param {String} [direction] ½øĞĞÅÅĞòµÄ·½Ïò,Ä¬ÈÏÎª sortInfo.direction °üÀ¨¡®ASC¡¯£¬¡®DESC'
+		* storeçš„æ¯”è¾ƒå‡½æ•°
+		* @param {Object} obj1 è¿›è¡Œæ¯”è¾ƒçš„è®°å½•1
+		* @param {Object} obj2 è¿›è¡Œæ¯”è¾ƒçš„è®°å½•2
+		* @param {String} [field] è¿›è¡Œæ’åºçš„å­—æ®µ,é»˜è®¤ä¸º sortInfo.field
+		* @param {String} [direction] è¿›è¡Œæ’åºçš„æ–¹å‘,é»˜è®¤ä¸º sortInfo.direction åŒ…æ‹¬â€˜ASCâ€™ï¼Œâ€˜DESC'
 		* @return {Number} 
-		* µ± obj1 > obj2 Ê±·µ»Ø 1
-		* µ± obj1 = obj2 Ê±·µ»Ø 0 
-		* µ± obj1 < obj2 Ê±·µ»Ø -1
+		* å½“ obj1 > obj2 æ—¶è¿”å› 1
+		* å½“ obj1 = obj2 æ—¶è¿”å› 0 
+		* å½“ obj1 < obj2 æ—¶è¿”å› -1
 		*/
 		compare: function(obj1, obj2, field, direction, dataType){
 			var _self = this,
@@ -348,7 +348,7 @@ KISSY.add(function(S){
 			direction = direction || _self.sortInfo.direction;
 			dataType = dataType || _self.sortInfo.dataType;
 
-			//Èç¹ûÎ´Ö¸¶¨ÅÅĞò×Ö¶Î£¬»ò·½Ïò£¬Ôò°´ÕÕÄ¬ÈÏË³Ğò
+			//å¦‚æœæœªæŒ‡å®šæ’åºå­—æ®µï¼Œæˆ–æ–¹å‘ï¼Œåˆ™æŒ‰ç…§é»˜è®¤é¡ºåº
 			if(!field || !direction){
 				return 1;
 			}
@@ -359,9 +359,9 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ÑéÖ¤ÊÇ·ñ´æÔÚÖ¸¶¨¼ÇÂ¼ -- Êı×Ö×ª»»booleanÖµ ÖĞ¼ä·½·¨
-		* @param {Object} record Ö¸¶¨µÄ¼ÇÂ¼
-		* @param {Function} [match = function(obj1,obj2){return obj1 == obj2}] Ä¬ÈÏÎª±È½Ï2¸ö¶ÔÏóÊÇ·ñÏàÍ¬
+		* éªŒè¯æ˜¯å¦å­˜åœ¨æŒ‡å®šè®°å½• -- æ•°å­—è½¬æ¢booleanå€¼ ä¸­é—´æ–¹æ³•
+		* @param {Object} record æŒ‡å®šçš„è®°å½•
+		* @param {Function} [match = function(obj1,obj2){return obj1 == obj2}] é»˜è®¤ä¸ºæ¯”è¾ƒ2ä¸ªå¯¹è±¡æ˜¯å¦ç›¸åŒ
 		* @return {Boolean}
 		*/
 		contains: function(record, match){
@@ -369,9 +369,9 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ²éÕÒÊı¾İËùÔÚµÄË÷ÒıÎ»ÖÃ,Èô²»´æÔÚ·µ»Ø-1 ¹«ÓÃ·½·¨ -- ÒÑ¾­´æÔÚÊı¾İ(Ìí¼Ó¹ıµÄ) Ôò·µ»ØÏàÓ¦¼ÓÔØÊı¾İµÄindexÖµ
-		* @param {Object} target Ö¸¶¨µÄ¼ÇÂ¼
-		* @param {Function} [func = function(obj1,obj2){return obj1 == obj2}] Ä¬ÈÏÎª±È½Ï2¸ö¶ÔÏóÊÇ·ñÏàÍ¬
+		* æŸ¥æ‰¾æ•°æ®æ‰€åœ¨çš„ç´¢å¼•ä½ç½®,è‹¥ä¸å­˜åœ¨è¿”å›-1 å…¬ç”¨æ–¹æ³• -- å·²ç»å­˜åœ¨æ•°æ®(æ·»åŠ è¿‡çš„) åˆ™è¿”å›ç›¸åº”åŠ è½½æ•°æ®çš„indexå€¼
+		* @param {Object} target æŒ‡å®šçš„è®°å½•
+		* @param {Function} [func = function(obj1,obj2){return obj1 == obj2}] é»˜è®¤ä¸ºæ¯”è¾ƒ2ä¸ªå¯¹è±¡æ˜¯å¦ç›¸åŒ
 		* @return {Number}
 		*/
 		findIndexBy: function(target, func){
@@ -394,9 +394,9 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ²éÕÒ¼ÇÂ¼£¬½ö·µ»ØµÚÒ»Ìõ  use
-		* @param {String} field ×Ö¶ÎÃû
-		* @param {String|Function} value ×Ö¶ÎÖµ »ò¹ıÂË·½·¨
+		* æŸ¥æ‰¾è®°å½•ï¼Œä»…è¿”å›ç¬¬ä¸€æ¡  use
+		* @param {String} field å­—æ®µå
+		* @param {String|Function} value å­—æ®µå€¼ æˆ–è¿‡æ»¤æ–¹æ³•
 		* @return {Object|null}
 		*/
 		find : function(field, value, func){ 
@@ -413,18 +413,18 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ¸ù¾İË÷Òı²éÕÒ¼ÇÂ¼
-		* @param {Number} index Ë÷Òı use
-		* @return {Object} ²éÕÒµÄ¼ÇÂ¼
+		* æ ¹æ®ç´¢å¼•æŸ¥æ‰¾è®°å½•
+		* @param {Number} index ç´¢å¼• use
+		* @return {Object} æŸ¥æ‰¾çš„è®°å½•
 		*/
 		findByIndex : function(index){
 			return this.resultRows[index];
 		},
 
 		/**
-		* ²éÕÒ¼ÇÂ¼£¬·µ»ØËùÓĞ·ûºÏ²éÑ¯Ìõ¼şµÄ¼ÇÂ¼
-		* @param {String} field ×Ö¶ÎÃû
-		* @param {String|Function} value ×Ö¶ÎÖµ »ò¹ıÂË·½·¨
+		* æŸ¥æ‰¾è®°å½•ï¼Œè¿”å›æ‰€æœ‰ç¬¦åˆæŸ¥è¯¢æ¡ä»¶çš„è®°å½•
+		* @param {String} field å­—æ®µå
+		* @param {String|Function} value å­—æ®µå€¼ æˆ–è¿‡æ»¤æ–¹æ³•
 		* @return {Array}
 		*/
 		findAll : function(field, value, func){
@@ -440,9 +440,9 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* »ñÈ¡ÏÂÒ»Ìõ¼ÇÂ¼
-		* @param {Object} record µ±Ç°¼ÇÂ¼
-		* @return {Object} ÏÂÒ»Ìõ¼ÇÂ¼
+		* è·å–ä¸‹ä¸€æ¡è®°å½•
+		* @param {Object} record å½“å‰è®°å½•
+		* @return {Object} ä¸‹ä¸€æ¡è®°å½•
 		*/
 		findNextRecord : function(record){
 			var _self = this,
@@ -455,8 +455,8 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ¼ÓÔØÊı¾İ,Èô²»Ìá¹©²ÎÊıÊ±£¬°´ÕÕÉÏ´ÎÇëÇóµÄ²ÎÊı¼ÓÔØÊı¾İ
-		* @param {Object} [params] ×Ô¶¨Òå²ÎÊıÒÔ¶ÔÏóĞÎÊ½Ìá¹©
+		* åŠ è½½æ•°æ®,è‹¥ä¸æä¾›å‚æ•°æ—¶ï¼ŒæŒ‰ç…§ä¸Šæ¬¡è¯·æ±‚çš„å‚æ•°åŠ è½½æ•°æ®
+		* @param {Object} [params] è‡ªå®šä¹‰å‚æ•°ä»¥å¯¹è±¡å½¢å¼æä¾›
 		* @example 
 		* store.load({id : 1234, type : 1});
 		*/
@@ -465,7 +465,7 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* »ñÈ¡¼ÓÔØÍêµÄÊı¾İ
+		* è·å–åŠ è½½å®Œçš„æ•°æ®
 		* @return {Array}
 		*/
 		getResult : function(){
@@ -473,7 +473,7 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* »ñÈ¡¼ÓÔØÍêµÄÊı¾İµÄÊıÁ¿ use
+		* è·å–åŠ è½½å®Œçš„æ•°æ®çš„æ•°é‡ use
 		* @return {Number}
 		*/
 		getCount : function () {
@@ -481,31 +481,31 @@ KISSY.add(function(S){
         },
 
 		/**
-		* »ñÈ¡Ìí¼ÓµÄÊı¾İ use
-		* @return {Array} ·µ»ØĞÂÌí¼ÓµÄÊı¾İ¼¯ºÏ
+		* è·å–æ·»åŠ çš„æ•°æ® use
+		* @return {Array} è¿”å›æ–°æ·»åŠ çš„æ•°æ®é›†åˆ
 		*/
 		getNewRecords : function(){
 			return this.newRecords;
 		},
 		
 		/**
-		* »ñÈ¡¸ü¸ÄµÄÊı¾İ
-		* @return {Array} ·µ»Ø¸ü¸ÄµÄÊı¾İ¼¯ºÏ
+		* è·å–æ›´æ”¹çš„æ•°æ®
+		* @return {Array} è¿”å›æ›´æ”¹çš„æ•°æ®é›†åˆ
 		*/
 		getModifiedRecords : function(){
 			return this.modifiedRecords;
 		},
 
 		/**
-		* »ñÈ¡É¾³ıµÄÊı¾İ
-		* @return {Array} ·µ»ØÉ¾³ıµÄÊı¾İ¼¯ºÏ
+		* è·å–åˆ é™¤çš„æ•°æ®
+		* @return {Array} è¿”å›åˆ é™¤çš„æ•°æ®é›†åˆ
 		*/
 		getDeletedRecords : function(){
 			return this.deletedRecords;
 		},
 
 		/**
-		* »ñÈ¡½ûÓÃµÄÊı¾İ use
+		* è·å–ç¦ç”¨çš„æ•°æ® use
 		* @return {Array}
 		*/ 
 		getDisableRecords : function(){
@@ -513,7 +513,7 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* »ñÈ¡±í¸ñÔ´Êı¾İµÄ×ÜÊı
+		* è·å–è¡¨æ ¼æºæ•°æ®çš„æ€»æ•°
 		* @return {Number}
 		*/
         getTotalCount : function () {
@@ -521,9 +521,9 @@ KISSY.add(function(S){
         },
 
 		/**
-		* É¾³ı¼ÇÂ¼´¥·¢ removerecords ÊÂ¼ş. use
-		* @param {Array|Object} data Ìí¼ÓµÄÊı¾İ£¬¿ÉÒÔÊÇÊı×é£¬¿ÉÒÔÊÇµ¥Ìõ¼ÇÂ¼
-		* @param {Function} [match = function(obj1, obj2){return obj1 == obj2}] Æ¥Åäº¯Êı£¬¿ÉÒÔÎª¿Õ
+		* åˆ é™¤è®°å½•è§¦å‘ removerecords äº‹ä»¶. use
+		* @param {Array|Object} data æ·»åŠ çš„æ•°æ®ï¼Œå¯ä»¥æ˜¯æ•°ç»„ï¼Œå¯ä»¥æ˜¯å•æ¡è®°å½•
+		* @param {Function} [match = function(obj1, obj2){return obj1 == obj2}] åŒ¹é…å‡½æ•°ï¼Œå¯ä»¥ä¸ºç©º
 		*/
 		remove :function(data, match){ 
 			var _self =this,
@@ -538,7 +538,7 @@ KISSY.add(function(S){
 				var index = _self.findIndexBy(element, match),
 				    record = _self._removeAt(index);
 
-				// Ìí¼Óµ½ÒÑÉ¾³ı¶ÓÁĞÖĞ, Èç¹ûÊÇĞÂÌí¼ÓµÄÊı¾İ£¬²»¼ÆÈëÉ¾³ıµÄÊı¾İ¼¯ºÏÖĞ
+				// æ·»åŠ åˆ°å·²åˆ é™¤é˜Ÿåˆ—ä¸­, å¦‚æœæ˜¯æ–°æ·»åŠ çš„æ•°æ®ï¼Œä¸è®¡å…¥åˆ é™¤çš„æ•°æ®é›†åˆä¸­
 				if(!S.inArray(record, _self.newRecords) && !S.inArray(record, _self.deletedRecords)){
 					_self.deletedRecords.push(record);
 				}
@@ -552,8 +552,8 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ÉèÖÃÊı¾İ£¬ÔÚ²»×Ô¶¯¼ÓÔØÊı¾İÊ±£¬¿ÉÒÔÊÖ¶¯Ìî³äÊı¾İ£¬»á´¥·¢ loadÊÂ¼ş
-		* @param {Array} data ÉèÖÃµÄÊı¾İ¼¯ºÏ£¬ÊÇÒ»¸öÊı×é
+		* è®¾ç½®æ•°æ®ï¼Œåœ¨ä¸è‡ªåŠ¨åŠ è½½æ•°æ®æ—¶ï¼Œå¯ä»¥æ‰‹åŠ¨å¡«å……æ•°æ®ï¼Œä¼šè§¦å‘ loadäº‹ä»¶
+		* @param {Array} data è®¾ç½®çš„æ•°æ®é›†åˆï¼Œæ˜¯ä¸€ä¸ªæ•°ç»„
 		*/
 		setResult:function(data){
 			var _self = this,			
@@ -563,7 +563,7 @@ KISSY.add(function(S){
 			_self.rowCount = data.length;
 			_self.totalCount = data.length;
 
-			// Ç°¶Ë·ÖÒ³
+			// å‰ç«¯åˆ†é¡µ
 			if(_self.isPagination){
 				data = _self._localPagination();
 			}
@@ -572,11 +572,11 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ÉèÖÃ¼ÇÂ¼µÄÖµ £¬´¥·¢ updaterecord ÊÂ¼ş
-		* @param {Object} obj ĞŞ¸ÄµÄ¼ÇÂ¼
-		* @param {String} field ĞŞ¸ÄµÄ×Ö¶ÎÃû
-		* @param {Any Type} value ĞŞ¸ÄµÄÖµ
-		* @param {Boolean} [isMatch = false] ÊÇ·ñĞèÒª½øĞĞÆ¥Åä£¬¼ì²âÖ¸¶¨µÄ¼ÇÂ¼ÊÇ·ñÔÚ¼¯ºÏÖĞ
+		* è®¾ç½®è®°å½•çš„å€¼ ï¼Œè§¦å‘ updaterecord äº‹ä»¶
+		* @param {Object} obj ä¿®æ”¹çš„è®°å½•
+		* @param {String} field ä¿®æ”¹çš„å­—æ®µå
+		* @param {Any Type} value ä¿®æ”¹çš„å€¼
+		* @param {Boolean} [isMatch = false] æ˜¯å¦éœ€è¦è¿›è¡ŒåŒ¹é…ï¼Œæ£€æµ‹æŒ‡å®šçš„è®°å½•æ˜¯å¦åœ¨é›†åˆä¸­
 		*/
 		setValue : function(obj, field, value, isMatch){
 			var record = obj,
@@ -599,10 +599,10 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ÅÅĞò£¬¸ù¾İStoreµÄÅäÖÃ½øĞĞ£¬Ç°¶ËÅÅĞò»ò·¢ËÍÇëÇóÖØĞÂ¼ÓÔØÊı¾İ
-		* Ô¶³ÌÅÅĞò£¬´¥·¢loadÊÂ¼ş£¬Ç°¶ËÅÅĞò´¥·¢localsortÊÂ¼ş
-		* @param {String} field ÅÅĞò×Ö¶Î
-		* @param {String} direction ÅÅĞò·½Ïò
+		* æ’åºï¼Œæ ¹æ®Storeçš„é…ç½®è¿›è¡Œï¼Œå‰ç«¯æ’åºæˆ–å‘é€è¯·æ±‚é‡æ–°åŠ è½½æ•°æ®
+		* è¿œç¨‹æ’åºï¼Œè§¦å‘loadäº‹ä»¶ï¼Œå‰ç«¯æ’åºè§¦å‘localsortäº‹ä»¶
+		* @param {String} field æ’åºå­—æ®µ
+		* @param {String} direction æ’åºæ–¹å‘
 		*/
 		sort : function(field, direction, dataType){
 			var _self = this;
@@ -611,7 +611,7 @@ KISSY.add(function(S){
 			_self.sortInfo.direction = direction || _self.sortInfo.direction;
 			_self.sortInfo.dataType = dataType || _self.sortInfo.dataType;
 	
-			//Èç¹ûÔ¶³ÌÅÅĞò£¬ÖØĞÂ¼ÓÔØÊı¾İ
+			//å¦‚æœè¿œç¨‹æ’åºï¼Œé‡æ–°åŠ è½½æ•°æ®
 			if(!_self.localSort){	
 				this.load();
 			}else{
@@ -621,9 +621,9 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ¸üĞÂ¼ÇÂ¼ £¬´¥·¢ updaterecord ÊÂ¼ş
-		* @param {Object} obj ĞŞ¸ÄµÄ¼ÇÂ¼
-		* @param {Boolean} [isMatch = false] ÊÇ·ñĞèÒª½øĞĞÆ¥Åä£¬¼ì²âÖ¸¶¨µÄ¼ÇÂ¼ÊÇ·ñÔÚ¼¯ºÏÖĞ
+		* æ›´æ–°è®°å½• ï¼Œè§¦å‘ updaterecord äº‹ä»¶
+		* @param {Object} obj ä¿®æ”¹çš„è®°å½•
+		* @param {Boolean} [isMatch = false] æ˜¯å¦éœ€è¦è¿›è¡ŒåŒ¹é…ï¼Œæ£€æµ‹æŒ‡å®šçš„è®°å½•æ˜¯å¦åœ¨é›†åˆä¸­
 		*/
 		update : function(obj, isMatch){
 			var record = obj,
@@ -646,7 +646,7 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* Ïú»Ù
+		* é”€æ¯
 		*/
         destroy: function () {
 			var _self = this;
@@ -654,7 +654,7 @@ KISSY.add(function(S){
 			_self = null;
         },
 
-		// Ìí¼Ó¼ÇÂ¼  -- ¿ÉÒÔÖ¸¶¨ĞòºÅ-Ìí¼Ó/Ìæ»»£» Ôö¼ÓindexÊı×éºÅ
+		// æ·»åŠ è®°å½•  -- å¯ä»¥æŒ‡å®šåºå·-æ·»åŠ /æ›¿æ¢ï¼› å¢åŠ indexæ•°ç»„å·
 		_addRecord :function(record, index){
 			var _self = this,
 				records = _self.resultRows;
@@ -666,7 +666,7 @@ KISSY.add(function(S){
 			_self.fire('recordadded',{record:record, index:index});
 		},
 
-		// Çå³ı¸Ä±äµÄÊı¾İ¼ÇÂ¼
+		// æ¸…é™¤æ”¹å˜çš„æ•°æ®è®°å½•
 		_clearChanges : function(){
 			var _self = this;
 			
@@ -677,10 +677,10 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* Éè¶¨ ½ûÓÃÊı¾İ ´Ë·½·¨»á´¥·¢ disableRecords ÊÂ¼ş
+		* è®¾å®š ç¦ç”¨æ•°æ® æ­¤æ–¹æ³•ä¼šè§¦å‘ disableRecords äº‹ä»¶
 		* @method setDisableRecords
-		* @param {obj || array} Òª½ûÓÃµÄÊı¾İ
-		* @return {Object} ½ûÓÃµÄÊı¾İ
+		* @param {obj || array} è¦ç¦ç”¨çš„æ•°æ®
+		* @return {Object} ç¦ç”¨çš„æ•°æ®
 		*/
 		setDisableRecords: function(data){
 			var _self = this;
@@ -697,10 +697,10 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ½â½ûÊı¾İ ´Ë·½·¨»á´¥·¢ cancelDisableRecords ÊÂ¼ş 
+		* è§£ç¦æ•°æ® æ­¤æ–¹æ³•ä¼šè§¦å‘ cancelDisableRecords äº‹ä»¶ 
 		* @method cancelDisableRecords
-		* @param {obj || array} Òª½â½ûµÄÊı¾İ
-		* @return {Object} ½â½ûµÄÊı¾İ
+		* @param {obj || array} è¦è§£ç¦çš„æ•°æ®
+		* @return {Object} è§£ç¦çš„æ•°æ®
 		*/
 		cancelDisableRecords: function(data){
 			var _self = this;
@@ -718,14 +718,14 @@ KISSY.add(function(S){
 			_self.fire('cancelDisableRecords', {'data': data});
 		},
 
-		// ¼ÓÔØÊı¾İ
+		// åŠ è½½æ•°æ®
 		_loadData : function(params){
 			var _self = this,
 				loadparams = params || {},
 				data = null;
 			
 			/**
-			* @private ÉèÖÃ½á¹û
+			* @private è®¾ç½®ç»“æœ
 			*/
 			function setResultLocal(resultRows, rowCount, totalCount){
 				_self.resultRows = resultRows;
@@ -735,19 +735,19 @@ KISSY.add(function(S){
 			}
 			_self.fire('beforeload');
 
-			// ÉèÖÃ params²ÎÊı -ÉÏ´ÎÇëÇó²ÎÊı - ÅÅĞò²ÎÊı - ·ÖÒ³ĞÅÏ¢ - ĞÂparms
+			// è®¾ç½® paramså‚æ•° -ä¸Šæ¬¡è¯·æ±‚å‚æ•° - æ’åºå‚æ•° - åˆ†é¡µä¿¡æ¯ - æ–°parms
 			var loadparamses = S.merge(_self.oldParams, _self.sortInfo, _self.pageInfo, loadparams);
 			_self.oldParams = loadparamses;
 
-			// ¸üĞÂ·ÖÒ³¡¢ÅÅĞò¡¢ajax config ĞÅÏ¢
+			// æ›´æ–°åˆ†é¡µã€æ’åºã€ajax config ä¿¡æ¯
 			_self.attrUpdater(loadparams);
 
-			// µ±Êı¾İÎª jsonp Ê±ºò methodÎªget
+			// å½“æ•°æ®ä¸º jsonp æ—¶å€™ methodä¸ºget
 			if(_self.proxy.dataType === 'jsonp'){
 				_self.proxy.method = 'get';
 			}
 			
-			// post vs get ·½Ê½²ÎÊı¸ñÊ½»¯
+			// post vs get æ–¹å¼å‚æ•°æ ¼å¼åŒ–
 			data = _self.proxy.method === 'post' ? loadparamses : (loadparamses ? S.param(loadparamses) : '');
 
 			S.ajax({
@@ -763,25 +763,25 @@ KISSY.add(function(S){
 						rowCount = 0,
 						totalCount = 0;
 
-					// Êı¾İ³ö´í 
+					// æ•°æ®å‡ºé”™ 
 					if(data.hasError){
 						setResultLocal(resultRows,rowCount,totalCount);
 						_self.fire('exception',{error:data.error});
 						return;
 					}
 
-					// jsonpÖ§³Ö
+					// jsonpæ”¯æŒ
 					if(S.isString(data)){
 						try{
 							data = S.JSON.parse(data);
 						}catch(ex){
-							S.log('jsonÊı¾İ×ª»»³ö´í£º' + ex);
+							S.log('jsonæ•°æ®è½¬æ¢å‡ºé”™ï¼š' + ex);
 							data = [];
 						}
 						
 					}
 
-					// ´¦ÀíÊı¾İ
+					// å¤„ç†æ•°æ®
 					if(S.isArray(data)){
 						resultRows = data;
 						rowCount = resultRows.length;
@@ -794,17 +794,17 @@ KISSY.add(function(S){
 							resultRows = [];
 						}
 						rowCount = resultRows.length;
-						totalCount = rowCount || parseInt(data[_self.totalProperty], 10); // ÓÅÑ¡ Êı×é¼ÆËã length 	ºóÑ¡Ôñ£º"results":21,
+						totalCount = rowCount || parseInt(data[_self.totalProperty], 10); // ä¼˜é€‰ æ•°ç»„è®¡ç®— length 	åé€‰æ‹©ï¼š"results":21,
 					} 
 
 					setResultLocal(resultRows, rowCount, totalCount);
 
-					// Ç°¶Ë ÅÅĞò
+					// å‰ç«¯ æ’åº
                     if (_self.localSort) {
                         _self._sortData();
                     } 
 					
-					// ¸üĞÂ ×Ü·ÖÒ³ ĞÅÏ¢					
+					// æ›´æ–° æ€»åˆ†é¡µ ä¿¡æ¯					
 					_self.setTotalPage( _self.calculatePageTotal() );
 					
 					_self.fire('load', {loadparams:loadparamses, data:data});
@@ -820,17 +820,17 @@ KISSY.add(function(S){
 			
 		},
 
-		// ¸üĞÂÄÚÖÃÊôĞÔĞÅÏ¢
+		// æ›´æ–°å†…ç½®å±æ€§ä¿¡æ¯
 		attrUpdater: function(loadparams){
 			var _self = this;
 
-			// ajax Config¡¢ ÅÅĞò¡¢·ÖÒ³ĞÅÏ¢ 
+			// ajax Configã€ æ’åºã€åˆ†é¡µä¿¡æ¯ 
 			_self.proxy = S.mix(_self.proxy, loadparams, true, ['dataType', 'method']);
 			_self.sortInfo = S.mix(_self.sortInfo, loadparams, true, ['field', 'direction']);
 			_self.pageInfo = S.mix(_self.pageInfo, loadparams, true, ['currentPage', 'limit', 'totalPage']);
 		},
 
-		//ÒÆ³ıÊı¾İ use
+		//ç§»é™¤æ•°æ® use
 		_removeAt:function(index, array){
 			if(index < 0){
 				return;
@@ -850,9 +850,9 @@ KISSY.add(function(S){
 			}
 		},
 
-		// ÅÅĞò  ÅÅĞò×Ö¶Î -- ÅÅĞò·½Ïò ASC || DSC -- ×Ö¶ÎÖµÀàĞÍ
+		// æ’åº  æ’åºå­—æ®µ -- æ’åºæ–¹å‘ ASC || DSC -- å­—æ®µå€¼ç±»å‹
 		/**
-		* ÅÅĞò·½·¨ ¸ù¾İÖ¸¶¨×Ö¶ÎÅÅĞò
+		* æ’åºæ–¹æ³• æ ¹æ®æŒ‡å®šå­—æ®µæ’åº
 		* @param {string} 
 		* @ default {field:'', direction:'ASC', dataType:'string'}
 		*/
@@ -863,7 +863,7 @@ KISSY.add(function(S){
 			direction = direction || _self.sortInfo.direction;
 			dataType = dataType || _self.sortInfo.dataType;
 
-			//Èç¹ûÎ´¶¨ÒåÅÅĞò×Ö¶Î£¬Ôò²»ÅÅĞò
+			//å¦‚æœæœªå®šä¹‰æ’åºå­—æ®µï¼Œåˆ™ä¸æ’åº
 			if(!field || !direction){
 				return;
 			}
@@ -872,12 +872,12 @@ KISSY.add(function(S){
 			});
 		},
 
-		//»ñÈ¡Ä¬ÈÏµÄÆ¥Åäº¯Êı
+		//è·å–é»˜è®¤çš„åŒ¹é…å‡½æ•°
 		_getDefaultMatch :function(){
 			return this.matchFunction;
 		},
 	
-		// »ñÈ¡·ÖÒ³Êı
+		// è·å–åˆ†é¡µæ•°
 		calculatePageTotal: function(totalRows, length){
 			var _self = this,
 				recordNos = _self.getTotalCount(),
@@ -890,28 +890,28 @@ KISSY.add(function(S){
 			return Math.ceil(totalRows/length); 
 		},
 		
-		// ±¾µØ·ÖÒ³
+		// æœ¬åœ°åˆ†é¡µ
 		_localPagination: function(){
 			var _self = this,				
 				limit = _self.getPageSize(),
 				nubs = _self.calculatePageTotal(); 
 
-			// Éè¶¨ Ò³ÊıÊı¾İ	
+			// è®¾å®š é¡µæ•°æ•°æ®	
 			var start = 0,
 				end = 0,
 				curPageData = [],
 				totalLength = _self.getTotalPage(),
 				page = _self.getCurrentPage();	
 
-			// µÚÒ»´Î Ôİ´æ×ÜÊı¾İ
+			// ç¬¬ä¸€æ¬¡ æš‚å­˜æ€»æ•°æ®
 			if(!_self.totalData.length){
 				_self.totalData = _self.getResult();
 			} 	
 			
-			// Éè¶¨×ÜÒ³Êı
+			// è®¾å®šæ€»é¡µæ•°
 			_self.setTotalPage(nubs);
 			
-			// ·ÖÒ³Êı¾İ	
+			// åˆ†é¡µæ•°æ®	
 			if(page < 1){
 				page = 1;
 			} 
@@ -920,33 +920,33 @@ KISSY.add(function(S){
 				page = totalLength;
 			}	
 			
-			// ÆğÊ¼·¶Î§ -- µÚÒ»Ò³ vs ×îºóÒ»Ò³
+			// èµ·å§‹èŒƒå›´ -- ç¬¬ä¸€é¡µ vs æœ€åä¸€é¡µ
 			start = page === 1 ? 0 : page*limit - limit;
 			end = page === 1 ? limit : (page === totalLength ? undefined : page*limit);
 
-			// ¼æÈİie
+			// å…¼å®¹ie
 			if(end === undefined){
 				curPageData = _self.totalData.slice(start);
 			}else{
 				curPageData = _self.totalData.slice(start, end);
 			}
 			
-			// »º´æ µ±Ç°Ò³
+			// ç¼“å­˜ å½“å‰é¡µ
 			_self.setCurrentPage(page);
 
-			// ĞŞ¸Ä result Êı¾İ¶ÔÏó
+			// ä¿®æ”¹ result æ•°æ®å¯¹è±¡
 			_self.resultRows = curPageData;
 
 			return curPageData;
 		},
 		
-		// »ñÈ¡µ±Ç°Ò³Ãæ
+		// è·å–å½“å‰é¡µé¢
 		getCurrentPage: function(){
 			var _self = this;
 			return _self.pageInfo.currentPage;
 		},
 
-		// Éè¶¨µ±Ç°Ò³Ãæ
+		// è®¾å®šå½“å‰é¡µé¢
 		setCurrentPage: function(curPage){
 			var _self = this;
 
@@ -959,22 +959,22 @@ KISSY.add(function(S){
 			}
 		},
 
-		// »ñÈ¡·ÖÒ³´óĞ¡
+		// è·å–åˆ†é¡µå¤§å°
 		getPageSize: function(){
 			var _self = this;
 			return _self.pageInfo.limit;
 		},
 
-		// »ñÈ¡×ÜÒ³Êı
+		// è·å–æ€»é¡µæ•°
 		getTotalPage: function(){
 			var _self = this;
 			return _self.pageInfo.totalPage;
 		},
 
 		/**
-		* ÉèÖÃ×ÜÒ³Êı ´Ë·½·¨»á´¥·¢ totalPageChangeÊÂ¼ş  
-		* @param {number} Éè¶¨×ÜÒ³Êı
-		* @return {Object} ·ÖÒ³Êı¾İ¶ÔÏó
+		* è®¾ç½®æ€»é¡µæ•° æ­¤æ–¹æ³•ä¼šè§¦å‘ totalPageChangeäº‹ä»¶  
+		* @param {number} è®¾å®šæ€»é¡µæ•°
+		* @return {Object} åˆ†é¡µæ•°æ®å¯¹è±¡
 		*/
 		setTotalPage: function(totalPage){
 			var _self = this,
@@ -988,7 +988,7 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ¶ÔÏóµÄÆ¥Åäº¯Êı£¬ÑéÖ¤Á½¸ö¶ÔÏóÊÇ·ñÏàµ±
+		* å¯¹è±¡çš„åŒ¹é…å‡½æ•°ï¼ŒéªŒè¯ä¸¤ä¸ªå¯¹è±¡æ˜¯å¦ç›¸å½“
 		* @field
 		* @type Function
 		* @default function(obj1,obj2){return obj1==obj2};
@@ -1008,8 +1008,8 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ÅÅĞò·½·¨ -- Ö§³Ö string || number(float) || date
-		* field ÅÅĞò×Ö¶Î
+		* æ’åºæ–¹æ³• -- æ”¯æŒ string || number(float) || date
+		* field æ’åºå­—æ®µ
 		*/
 		compareFunction: function(obj1, obj2, dataType){
 			var _self = this,
@@ -1024,9 +1024,9 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* ¸ù¾İÖ¸¶¨ÀàĞÍ  ´¦Àí ÅÅĞòÊı¾İ
+		* æ ¹æ®æŒ‡å®šç±»å‹  å¤„ç† æ’åºæ•°æ®
 		* @param {string}
-		* @return ´¦Àí¹ıµÄÊı¾İ
+		* @return å¤„ç†è¿‡çš„æ•°æ®
 		*/
 		dataMachining: function(value, valueType){
 			if(!value){
@@ -1047,13 +1047,13 @@ KISSY.add(function(S){
 			}	
 		},
 
-		//³õÊ¼»¯ -- oldParams¶ÔÏó -- url±ğÃû -- resultRows
+		//åˆå§‹åŒ– -- oldParamså¯¹è±¡ -- urlåˆ«å -- resultRows
 		_init : function(){
 			var _self =this;
 
 			_self.oldParams = _self.params || {};
 			
-			// ajax ÅäÖÃ -- ¼ò½àÅäÖÃ
+			// ajax é…ç½® -- ç®€æ´é…ç½®
 			if(_self.url) {
                 _self.proxy.url = _self.url;
             }
@@ -1064,7 +1064,7 @@ KISSY.add(function(S){
                 _self.proxy.dataType = _self.dataType;
             }
 
-            // ·ÖÒ³ĞÅÏ¢ -- ¼ò½àÅäÖÃ             
+            // åˆ†é¡µä¿¡æ¯ -- ç®€æ´é…ç½®             
             if(S.isNumber(_self.totalPage) ) {
                 _self.pageInfo.totalPage = _self.totalPage;
             }

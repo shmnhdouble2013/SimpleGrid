@@ -270,4 +270,4 @@ KISSY.add(function(S, Core, KP, template){
 	});
 	
 	return Pagination;
-},{requires:['core', './paginationBase', './themes/back_middle', './back.css']});
+},{requires:['core', './paginationBase', './themes/back_middle', './back.css', './btn.css']});

@@ -57,8 +57,8 @@
     
           new TmSimpleGrid('#J_selectCandTable', {	
             
-                width:"1000px",									// 强制设定 表格 高度 1000 or '1000px' 或者 设置'auto' 自适应
-                // height:400,									
+                // width:"500px",									// 强制设定 表格 高度 1000 or '1000px' 或者 设置'auto' 自适应
+                height:400,									
 
                 // ajaxUrl: 'result.php', 						// 异步接口 result.php   result_jsonp.php
                 // isJsonp: false,								// 是否 为jsonp 默认为false	
@@ -70,7 +70,7 @@
                 checkable: true,								// 是否 开启 复选框 checkbox ---- 默认 false 不显示 ，注意 次配置不开启则 isShowCheckboxText 显示文字无效
                 isShowCheckboxText: true, 						// 是否 显示 checkbox 序号 和 表头 全选文字， 默认 false 不显示
                   
-                pageSize:3, 									// 分页大小  默认10条/页
+                pageSize:8, 									// 分页大小  默认10条/页
                                                                 // 关于分页： 异步 默认 后端 分页数据，若为静态数据 则自动 前端 本地分页 
                 columns: [
                   {title: 'id', width: '150px', sortable: true, dataType: 'float', dataIndex: 'id'},

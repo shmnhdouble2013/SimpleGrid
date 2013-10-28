@@ -1,7 +1,7 @@
 
 /**
-* grid ±í¸ñÑùÊ½ 1.0
-* Ë®Ä¾Äê»ªdouble ÍúÍú
+* grid è¡¨æ ¼æ ·å¼ 1.0
+* æ—ºæ—º<æ°´æœ¨å¹´ådouble>
 **/
 
 body, button, input, select, textarea {
@@ -14,7 +14,7 @@ a {
 	text-decoration: none;
 }
 
-/* ÈİÆ÷ */
+/* å®¹å™¨ */
 .table-container{
 	overflow:auto;
 	margin: 5px;
@@ -28,39 +28,14 @@ a {
 }
 
 /* table */
-.table-container table{
+.ui-table{
+	width: 100%;
 	table-layout: fixed;
 	text-align: left;
 	border-collapse: collapse;
 	border-spacing: 0;
 	display: table;
 	border-color: gray;
-}
-
-.table-container th tr{
-	border-bottom: 1px solid #ebebeb;
-	color: #333333;
-	padding: 5px;
-	background-color: #ebebeb;
-	font-weight: 700;
-}
-
-
-.table-container tr{
-	display: table-row;
-	vertical-align: inherit;
-	border-color: inherit;
-}
-
-.table-container td{
-	padding: 5px;
-	color: #333333;
-}
-
-.ui-table{
-	width: 100%;
-	table-layout: fixed;
-	text-align: left;
 }
 
 .ui-table th, .ui-table tfoot td {
@@ -78,7 +53,7 @@ a {
 	background: #f2f2f2 url(data:image/gif;base64,R0lGODdhAQABAPAAAPv7+wAAACH/C1hNUCBEYXRhWE1QAT8ALAAAAAABAAEAAAICRAEAOw==) repeat-x;
 }
 
-/* td ³¬³¤½Ø¶Ï...*/
+/* td è¶…é•¿æˆªæ–­...*/
 .ui-table tbody td, .ui-table thead th{
 	padding: 8px;
 	text-overflow:ellipsis;
@@ -92,12 +67,12 @@ a {
 }
 
 
-/* Òş²ØÁĞ */
+/* éšè—åˆ— */
 .cls-hide{
 	display: none;
 }
 
-/* ´øĞòºÅµÄ checkbox ÎÄ×ÖË®Æ½¶ÔÆë*/
+/* å¸¦åºå·çš„ checkbox æ–‡å­—æ°´å¹³å¯¹é½*/
 td.checkbox-index{
 	font-size: 13px;
 }
@@ -105,7 +80,7 @@ td.checkbox-index{
 	vertical-align: bottom;
 }
 
-/* ÅÅĞòÑùÊ½	 */
+/* æ’åºæ ·å¼	 */
 th a, th a:hover {
 	text-decoration: none;
 	color: #333;
@@ -118,34 +93,31 @@ th a, th a:hover {
 	vertical-align: middle;
 	margin-left: 1px;
 }
-/*½µĞò*/
+/*é™åº*/
 .asc{
 	background-position: -46px -23px;
 }
-/*ÉıĞò*/
+/*å‡åº*/
 .desc{
 	background-position: -30px -23px;
 }
 
 
-/* tr Ñ¡ÖĞÑùÊ½ */
+/* tr é€‰ä¸­æ ·å¼ */
 .grid-row-selected td{
 	background-color: #ffede1;
 }
-/* tr Êó±êÒÆ¶¯hoverÑùÊ½ */
+/* tr é¼ æ ‡ç§»åŠ¨hoveræ ·å¼ */
 .grid-row-over td{
 	background-color: #DCF4F8;
 }
 
- /*Å¼Êıtr td ÑÕÉ«*/
+ /*å¶æ•°tr td é¢œè‰²*/
 .even-tr{
 	/*background-color: #f4f4f4;*/
 }
 
-
-
-
- /* checkboxÑùÊ½ */
+ /* checkboxæ ·å¼ */
 input[type=radio], input[type=checkbox] {
 	margin-right: 5px;
 	/*height:13px;*/
@@ -190,7 +162,7 @@ input[type=radio], input[type=checkbox] {
 
 
 
-/**** ·ÖÒ³Æ÷ÑùÊ½ *****/
+/**** åˆ†é¡µå™¨æ ·å¼ *****/
 .page-container{
 	margin: 3px 0;
 	margin-right: 5px;
@@ -277,7 +249,7 @@ input[type=radio], input[type=checkbox] {
 	background-color: #F3F2F2;
 }
 
-/* loading ÕÚÕÖ */
+/* loading é®ç½© */
 .loading-mask{
 	position: absolute;
 	width:100%;
