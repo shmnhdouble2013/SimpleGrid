@@ -21,7 +21,7 @@ module.exports = function(grunt) {
                 map: [["<%= pkg.name %>/", "gallery/<%= pkg.name %>/"]]
             },
             main: {
-                files: [
+                files: [ // 文件的配置 -- 源文件 vs 目标文件
                     {
                         src: "<%= pkg.version %>/index.js",
                         dest: "<%= pkg.version %>/build/index.js"
@@ -35,9 +35,9 @@ module.exports = function(grunt) {
          */
         uglify: {
             options: {
-                banner: '<%= banner %>',
+                banner: '<%= banner %>',  // 向构建后文件头打印自定义信息
                 beautify: {
-                    ascii_only: true
+                    ascii_only: true     //中文ascii化，非常有用防止中文乱码的利器
                 }
             },
             page: {

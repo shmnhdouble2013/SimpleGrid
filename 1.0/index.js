@@ -1,15 +1,19 @@
 
 
 /** 
-* @fileOverview TmSimpleGrid表格
+* @fileOverview SimpleGrid表格
 * @extends  KISSY.Base
 * @author   黄甲 <水木年华double>
 * @depends  ks-core
 * @version  1.0  
 * @update   2013-09-30
 * @example
-*   new TmSimpleGrid('#poolTable', {
-		gridData:[{},{}]				// 静态数据
+*   new SimpleGrid('#poolTable', {
+		gridData:[{},{}],				// 静态数据
+		columns: [						// 列配置
+            {title: 'id', width: '150px', sortable: true, dataType: 'float', dataIndex: 'id'},
+            {title: '活动类型',width: 'auto', sortable: true, dataType: 'string', dataIndex: 'actype'}
+        ]    
 	});
 
 	* 	ajaxUrl 返回数据格式
@@ -19,16 +23,9 @@
 	*		"rows":[], 
 	*		"results":0 
 	*	}	
-
-	new Store({
-		url : _self.get('ajaxUrl'),
-		root: 'rows',
-		totalProperty: 'results', 	 // 数据条数
-		params: {type:'all', id:'DJKFJDKFJ94944'}	//自定义参数
-	});	
 */
 
-KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagination, TL) { 
+KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Pagination, TL) { 
 	var DOM = S.DOM,
 		Node = S.Node,
 		Ajax = S.IO,
@@ -124,11 +121,11 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 	
 	 /**
      * 
-     * @class TmSimpleGrid
+     * @class SimpleGrid
      * @constructor
      * @extends Base
      */
-	function TmSimpleGrid(container, config){
+	function SimpleGrid(container, config){
 		var _self = this,
 			config = S.merge(POLLGRIDDEFAULT, config);
 
@@ -140,18 +137,18 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 		_self.container = S.get(container) ? S.get(container) : S.get('#'+container);
 		
 
-		if( !(_self instanceof TmSimpleGrid) ){
-			return new TmSimpleGrid(container, config);
+		if( !(_self instanceof SimpleGrid) ){
+			return new SimpleGrid(container, config);
 		}
 
-		TmSimpleGrid.superclass.constructor.call(_self, config);		
+		SimpleGrid.superclass.constructor.call(_self, config);		
 
 		_self._init();
 	}
 
 
 	// 支持的事件
-	TmSimpleGrid.events = [
+	SimpleGrid.events = [
 		/**  
 		* 开始附加数据
 		* @name Grid#beginappend 
@@ -303,11 +300,11 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 		'unAllRowsSelected'
 	];
 
-	TmSimpleGrid.VERSION = 1.0;
+	SimpleGrid.VERSION = 1.0;
 
 	// 继承于KISSY.Base  
-	S.extend(TmSimpleGrid, S.Base);	
-	S.augment(TmSimpleGrid, {
+	S.extend(SimpleGrid, S.Base);	
+	S.augment(SimpleGrid, {
 
 		// 控件 初始化
 		_init: function(){
@@ -1367,7 +1364,7 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 	
 	});
 
-return TmSimpleGrid;
+return SimpleGrid;
 
 }, {'requires':['xtemplate', './store', './plugin/pagination/pagination', './uicommon', 'sizzle', './grid.css']}); 
 
