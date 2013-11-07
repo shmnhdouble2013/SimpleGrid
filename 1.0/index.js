@@ -1366,7 +1366,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 return SimpleGrid;
 
-}, {'requires':['xtemplate', './store', './plugin/pagination/pagination', './uicommon', 'sizzle', './grid.css']}); 
+}, {'requires':['xtemplate', './lib/store', './lib/pagination/pagination', './lib/uicommon', 'sizzle', './lib/grid.css']}); 
 
 /**
 * 已知问题：
