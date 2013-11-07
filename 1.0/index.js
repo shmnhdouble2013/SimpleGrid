@@ -3,15 +3,29 @@
 /** 
 * @fileOverview TmSimpleGrid表格
 * @extends  KISSY.Base
-* @author  huangjia<水木年华double>
+* @author   黄甲 <水木年华double>
 * @depends  ks-core
-* @version 1.0  
-* @update 2013-09-30
-* @module tmSimpleGrid
+* @version  1.0  
+* @update   2013-09-30
 * @example
 *   new TmSimpleGrid('#poolTable', {
 		gridData:[{},{}]				// 静态数据
 	});
+
+	* 	ajaxUrl 返回数据格式
+	*	{ 	
+	*		"success":true,
+	*		"message":"",
+	*		"rows":[], 
+	*		"results":0 
+	*	}	
+
+	new Store({
+		url : _self.get('ajaxUrl'),
+		root: 'rows',
+		totalProperty: 'results', 	 // 数据条数
+		params: {type:'all', id:'DJKFJDKFJ94944'}	//自定义参数
+	});	
 */
 
 KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagination, TL) { 
@@ -24,7 +38,7 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
         win = window,
         doc = document;		
 
-	// 设定全局 参数 变量 
+	// 设定全局 参数 常量 
 	var	CONTAINERCLS = 'j_tableContent',			// table 容器钩子
 
 		CHECKRDIOTH = 'j_checkRdio',				// checkbox radio 列 宽度cls
@@ -101,29 +115,11 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 			isPagination:true,						// 是否有分页 默认 有
 
 			pageSize: 10, 							// 分页大小
-			// isLocalPagination: false,			// 是否 本地分页
 
 			dataField:'id',							// 单条 josn 数据 标示
 
 			isOuterTpl: false						// 是否外部自定义 tr 模板
-		}
-
-	/**
-	* 	ajaxUrl 返回数据格式
-	*	{ 	
-	*		"success":true,
-	*		"message":"",
-	*		"rows":[], 
-	*		"results":0 
-	*	}	
-
-		new Store({
-			url : _self.get('ajaxUrl'),
-			root: 'rows',
-			totalProperty: 'results', 	 // 数据条数
-			params: {type:'all', id:'DJKFJDKFJ94944'}	//自定义参数
-		});	
-	*/	
+		};
 	
 	
 	 /**
@@ -149,167 +145,168 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 		}
 
 		TmSimpleGrid.superclass.constructor.call(_self, config);		
-		
-
-		// 支持的事件
-		_self.events = [
-			/**  
-			* 开始附加数据
-			* @name Grid#beginappend 
-			* @event  
-			* @param {event} e  事件对象
-			* @param {Array} e.data 附加显示的数据
-			*/
-			'beginappend',
-			
-			/**  
-			* 附加数据完成
-			* @name Grid#afterappend 
-			* @event  
-			* @param {event} e  事件对象
-			* @param {Array} e.data 附加显示的数据
-			* @param {Array} e.rows 附加显示的数据行DOM结构
-			*/
-			'afterappend',
-
-			/**  
-			* 开始显示数据，一般是数据源加载完数据，开始在表格上显示数据
-			* @name Grid#beginshow
-			* @event  
-			* @param {event} e  事件对象
-			*/			
-			'beginshow',
-
-			/**  
-			* 显示数据完成，一般是数据源加载完数据，并在表格上显示完成
-			* @name Grid#aftershow
-			* @event  
-			* @param {event} e  事件对象
-			*/
-			'aftershow',
-
-			/**  
-			* 移除行，一般是数据源移除数据后，表格移除对应的行数据
-			* @name Grid#rowremoved
-			* @event  
-			* @param {event} e  事件对象
-			* @param {Object} e.data 行对应的记录
-			* @param {Object} e.row 行对应的DOM对象
-			*/
-			'rowremoved',
-
-			/**  
-			* 添加行，一般是数据源添加数据、加载数据后，表格显示对应的行后触发
-			* @name Grid#rowcreated
-			* @event  
-			* @param {event} e  事件对象
-			* @param {Object} e.data 行对应的记录
-			* @param {Object} e.row 行对应的DOM对象
-			*/
-			'rowcreated',
-
-			/**  
-			* 翻页前触发 引自 mui/Pagination 分页, 转发分页事件
-			* @name Grid# afterPageChanged
-			* @event  
-			* @return 分页信息对象
-			*/
-			'afterPageChanged',
-
-			/**  
-			* 行点击事件
-			* @name Grid#rowclick
-			* @event  
-			* @param {event} e  事件对象
-			* @param {Object} e.data 行对应的记录
-			* @param {Object} e.row 行对应的DOM对象
-			* 
-			*/
-			'rowclick',
-
-			/**  
-			* 单元格点击事件
-			* @name Grid#cellclick
-			* @event  
-			* @param {event} e  事件对象
-			* @param {Object} e.data 行对应的记录
-			* @param {Object} e.row 点击行对应的DOM对象
-			*/
-			'cellclick',
-
-			/**  
-			* 行双击事件
-			* @name Grid#rowdblclick
-			* @event  
-			* @param {event} e  事件对象
-			* @param {Object} e.data 行对应的记录
-			* @param {Object} e.row 行对应的DOM对象
-			* 
-			*/
-			'rowdblclick',
-
-			/**  
-			* 单元格双击事件
-			* @name Grid#celldblclick
-			* @event  
-			* @param {event} e  事件对象
-			* @param {Object} e.data 行对应的记录
-			* @param {Object} e.row 点击行对应的DOM对象
-			*/
-			'celldblclick',
-
-			/**  
-			* 行选中事件
-			* @name Grid#rowselected
-			* @event  
-			* @param {event} e  事件对象
-			* @param {Object} e.data 行对应的记录
-			* @param {Object} e.row 行对应的DOM对象
-			*/
-			'rowselected',
-
-			/**  
-			* 行取消选中事件
-			* @name Grid#rowunselected
-			* @event  
-			* @param {event} e  事件对象
-			* @param {Object} e.data 行对应的记录
-			* @param {Object} e.row 行对应的DOM对象
-			*/
-			'rowunselected',
-
-			/**  
-			* 行选中状态改变事件
-			* @name Grid#rowselectchanged
-			* @event  
-			* @param {event} e  事件对象
-			* @param {Object} e.data 行对应的记录
-			* @param {Object} e.row 行对应的DOM对象
-			* @param {Object} e.selected 选中的状态
-			*/
-			'rowselectchanged',			 
-
-			/**  
-			* 全选事件 发生
-			* @name Grid#allRowsSelected
-			* @event  
-			*/
-			'allRowsSelected',
-
-			/**  
-			* 取消全选事件 发生
-			* @name Grid#unAllRowsSelected
-			* @event  
-			*/
-			'unAllRowsSelected'
-		];
 
 		_self._init();
 	}
 
-	// 继承于KISSY.Base  
-	S.extend(TmSimpleGrid, S.Base);
+
+	// 支持的事件
+	TmSimpleGrid.events = [
+		/**  
+		* 开始附加数据
+		* @name Grid#beginappend 
+		* @event  
+		* @param {event} e  事件对象
+		* @param {Array} e.data 附加显示的数据
+		*/
+		'beginappend',
+		
+		/**  
+		* 附加数据完成
+		* @name Grid#afterappend 
+		* @event  
+		* @param {event} e  事件对象
+		* @param {Array} e.data 附加显示的数据
+		* @param {Array} e.rows 附加显示的数据行DOM结构
+		*/
+		'afterappend',
+
+		/**  
+		* 开始显示数据，一般是数据源加载完数据，开始在表格上显示数据
+		* @name Grid#beginshow
+		* @event  
+		* @param {event} e  事件对象
+		*/			
+		'beginshow',
+
+		/**  
+		* 显示数据完成，一般是数据源加载完数据，并在表格上显示完成
+		* @name Grid#aftershow
+		* @event  
+		* @param {event} e  事件对象
+		*/
+		'aftershow',
+
+		/**  
+		* 移除行，一般是数据源移除数据后，表格移除对应的行数据
+		* @name Grid#rowremoved
+		* @event  
+		* @param {event} e  事件对象
+		* @param {Object} e.data 行对应的记录
+		* @param {Object} e.row 行对应的DOM对象
+		*/
+		'rowremoved',
+
+		/**  
+		* 添加行，一般是数据源添加数据、加载数据后，表格显示对应的行后触发
+		* @name Grid#rowcreated
+		* @event  
+		* @param {event} e  事件对象
+		* @param {Object} e.data 行对应的记录
+		* @param {Object} e.row 行对应的DOM对象
+		*/
+		'rowcreated',
+
+		/**  
+		* 翻页前触发 引自 mui/Pagination 分页, 转发分页事件
+		* @name Grid# afterPageChanged
+		* @event  
+		* @return 分页信息对象
+		*/
+		'afterPageChanged',
+
+		/**  
+		* 行点击事件
+		* @name Grid#rowclick
+		* @event  
+		* @param {event} e  事件对象
+		* @param {Object} e.data 行对应的记录
+		* @param {Object} e.row 行对应的DOM对象
+		* 
+		*/
+		'rowclick',
+
+		/**  
+		* 单元格点击事件
+		* @name Grid#cellclick
+		* @event  
+		* @param {event} e  事件对象
+		* @param {Object} e.data 行对应的记录
+		* @param {Object} e.row 点击行对应的DOM对象
+		*/
+		'cellclick',
+
+		/**  
+		* 行双击事件
+		* @name Grid#rowdblclick
+		* @event  
+		* @param {event} e  事件对象
+		* @param {Object} e.data 行对应的记录
+		* @param {Object} e.row 行对应的DOM对象
+		* 
+		*/
+		'rowdblclick',
+
+		/**  
+		* 单元格双击事件
+		* @name Grid#celldblclick
+		* @event  
+		* @param {event} e  事件对象
+		* @param {Object} e.data 行对应的记录
+		* @param {Object} e.row 点击行对应的DOM对象
+		*/
+		'celldblclick',
+
+		/**  
+		* 行选中事件
+		* @name Grid#rowselected
+		* @event  
+		* @param {event} e  事件对象
+		* @param {Object} e.data 行对应的记录
+		* @param {Object} e.row 行对应的DOM对象
+		*/
+		'rowselected',
+
+		/**  
+		* 行取消选中事件
+		* @name Grid#rowunselected
+		* @event  
+		* @param {event} e  事件对象
+		* @param {Object} e.data 行对应的记录
+		* @param {Object} e.row 行对应的DOM对象
+		*/
+		'rowunselected',
+
+		/**  
+		* 行选中状态改变事件
+		* @name Grid#rowselectchanged
+		* @event  
+		* @param {event} e  事件对象
+		* @param {Object} e.data 行对应的记录
+		* @param {Object} e.row 行对应的DOM对象
+		* @param {Object} e.selected 选中的状态
+		*/
+		'rowselectchanged',			 
+
+		/**  
+		* 全选事件 发生
+		* @name Grid#allRowsSelected
+		* @event  
+		*/
+		'allRowsSelected',
+
+		/**  
+		* 取消全选事件 发生
+		* @name Grid#unAllRowsSelected
+		* @event  
+		*/
+		'unAllRowsSelected'
+	];
+
 	TmSimpleGrid.VERSION = 1.0;
+
+	// 继承于KISSY.Base  
+	S.extend(TmSimpleGrid, S.Base);	
 	S.augment(TmSimpleGrid, {
 
 		// 控件 初始化
@@ -389,20 +386,35 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 			}, 200);
 		},
 
-		// 监控 纵向滚动条问题
+		// 修正 滚动条值
 		_scrollRender: function(){
-			var _self = this,				
+			var _self = this,	
+				correctPx = 13,	
+				afterCorrectWidth,	
+				curLastThWidth = _self.lastTh.width(),					
 				hasScrollTop = _self.isScrollTop(_self.tbodyContainer);
 
-			// ie 6-7 不添加修正值	
+			// ie 6-7 则不修正	
 			if(UA.trident && UA.ie <= 7){
 				return;
-			}	
+			}
 
+			// // safari 修正值
+			// if(UA.safari){
+			// 	correctPx = 28;
+			// }
+			afterCorrectWidth = _self.lastThWidth + correctPx;
+			
+			// 修正值 避重判断		
+			if( hasScrollTop && (curLastThWidth === afterCorrectWidth) || !hasScrollTop && (curLastThWidth === _self.lastThWidth) ){
+				return;
+			}
+
+			// 写入修正值
 			if(hasScrollTop){
-				DOM.css(_self.lastTh, "width", _self.lastThWidth + 13 + 'px');
+				DOM.css(_self.lastTh, "width", afterCorrectWidth + 'px');
 			}else{
-				DOM.css(_self.lastTh, "width", _self.lastThWidth + 'px');
+				DOM.css(_self.lastTh, "width", _self.lastThWidth + 'px');				
 			}	
 		},
 
@@ -1107,6 +1119,7 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 				dom = rowEl.getDOMNode();
 
 			DOM.data(dom, DATA_ELEMENT, element);
+
 			_self.fire('rowcreated',{data: element, row: dom});
 
             return rowTemplate;
@@ -1356,13 +1369,13 @@ KISSY.add('gallery/tmSimpleGrid/1.0/index', function(S, XTemplate, Store, Pagina
 
 return TmSimpleGrid;
 
-}, {'requires':['xtemplate', './store', './pagination/pagination', './uicommon', 'sizzle', './grid.css']}); 
+}, {'requires':['xtemplate', './store', './plugin/pagination/pagination', './uicommon', 'sizzle', './grid.css']}); 
 
 /**
 * 已知问题：
-* 当表格高度 大于容器指定 高度 出现滚动条，导致的 th标题 与 td内容 对齐 存在 15左右像素偏差 -- 修复
-* 排序 后 全选 回显 问题
-* 当动态隐藏 某列 时候 存在 th td 对齐偏差
+* safari 纵向滚动条 导致的 th标题 与 td内容 对齐 存在 15左右像素偏差 
+* 点击排序 后 单选 回显 问题 
+* 当动态隐藏 某列 时候 存在 th td 对齐偏差，建议第一次就渲染好列，不要动态改动
 * 
 **/
 

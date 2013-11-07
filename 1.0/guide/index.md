@@ -1,13 +1,17 @@
 ## 综述
 
-tmSimpleGrid是。
+tmSimpleGrid是一个非常丰富、方便灵活的kissy Grid表格组件，将带给您: 同步|异步|排序|分页|事件|事件操作|数据处理 等方面的丰富体验。
 
 * 版本：1.0
-* 作者：huangjia
-* 标签：
-* demo：[http://gallery.kissyui.com/tmSimpleGrid/1.0/demo/index.html](http://gallery.kissyui.com/tmSimpleGrid/1.0/demo/index.html)
+* 作者：水木年华double
+* 标签：Beta
+* demo：[查看demo](http://gallery.kissyui.com/tmSimpleGrid/1.0/demo/index.html)
 
 ## 初始化组件
+
+	demo ../demo/index.html
+
+
 
     S.use('gallery/tmSimpleGrid/1.0/index', function (S, TmSimpleGrid) {
         var tmSimpleGrid = new TmSimpleGrid('#container' , {
@@ -37,5 +41,7 @@ tmSimpleGrid是。
 
 		});
     })
+
+
 
 ## API说明
