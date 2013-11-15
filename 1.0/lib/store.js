@@ -1,8 +1,9 @@
+
 /**
 * 数据缓冲类，缓存数据在浏览器中
-* @class 数据缓冲类
-* @param {Object} config 配置项，store上面的field字段可以传入配置项中
-* @property {String} url 是字段 proxy.url的简写方式，可以直接写在配置信息中
+* @class 数据缓冲类 Store
+* @author 黄甲
+* @constructor Base
 * @example 
 * var store = new Store({
 *	url : 'data.php'
@@ -59,9 +60,9 @@ KISSY.add(function(S){
 
 			/**
 			* 排序信息 
-			* @field 2个字段 -- 排序字段、排序方向
+			* @field 3个字段 -- 排序字段、排序方向、排序数据类型(float || int || date|)，默认string 
 			* @type Object
-			* @default { field: '', direction: 'ASC' }
+			* @default { field: '', direction: 'ASC', direction: 'string' }
 			* @example 
 			* var store = new Store({
 			*		url : 'data.php',
@@ -161,7 +162,6 @@ KISSY.add(function(S){
 			*/
 			'acceptchanges',
 
-
 			/**  
 			* 当数据加载完成后
 			* @name Store#load  
@@ -256,16 +256,7 @@ KISSY.add(function(S){
 			* @param {event} e  事件对象
 			* @return {obj} 返回 分页信息 对象
 			*/
-			'totalPageChange',
-
-			/**  
-			* currentPageChanged
-			* @name Store#currentPageChanged  
-			* @event  
-			* @param {event} e  事件对象
-			* @return {number} 返回当前页面
-			*/
-			'currentPageChanged'			  
+			'totalPageChange'	  
 		];
 
 		_self._init();
@@ -294,7 +285,7 @@ KISSY.add(function(S){
 		*  function(obj1,obj2){
 		*	 return obj1 == obj2;
 		*  }
-		*  use
+		*  
 		*/
 		add: function(data, noRepeat, match){
 			var _self=this,
@@ -312,7 +303,8 @@ KISSY.add(function(S){
 					newData.push(element);
 					// 全局 - 增加 新增 记录
 					_self.newRecords.push(element);
-					// 全局 - 新添加数据 抹去 在删除记录 - 更改记录 的数据历史 
+
+					// 全局 - 新添加数据 抹去 删除-修改-禁用记录 - 更改记录 的数据历史 
 					_self._removeFrom(element, _self.deletedRecords);
 					_self._removeFrom(element, _self.modifiedRecords);
 					_self._removeFrom(element, _self.disableRecords);
@@ -1024,7 +1016,7 @@ KISSY.add(function(S){
 		},
 
 		/**
-		* 根据指定类型  处理 排序数据
+		* 根据指定类型  处理 排序数据 string || float || int || date
 		* @param {string}
 		* @return 处理过的数据
 		*/

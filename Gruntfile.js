@@ -25,6 +25,10 @@ module.exports = function(grunt) {
                     {
                         src: "<%= pkg.version %>/index.js",
                         dest: "<%= pkg.version %>/build/index.js"
+                    },
+                    {
+                        src: "<%= pkg.version.lib %>/*.js",
+                        dest: "<%= pkg.version %>/build/lib/*.js"
                     }
                 ]
             }

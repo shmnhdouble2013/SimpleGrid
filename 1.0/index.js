@@ -51,8 +51,8 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 		CLS_GRID_CELL = 'grid-cell',				// grid cell标示
 		COMMAND_BTN = 'command-btn',				// 操作栏 btn 标示 -- 主要阻止 选中状态
 
-		CHECKBOXW = '60px',  						// checkbox 显示 带有序列号 的宽度
-		CHECKBOXS = '30px',							// checkbox 不显示 序号 默认 宽度
+		CHECKBOXW = '60',  						// checkbox 显示 带有序列号 的宽度
+		CHECKBOXS = '30',							// checkbox 不显示 序号 默认 宽度
 		
 		DRECTION_TAGS = 'drection-tags',			// 排序字段标示
 		DRECTION_ASC = 'asc',						// 升序 cls
@@ -97,7 +97,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 		
 
 
-	// grid 默认配置
+	// SimpleGrid 默认配置
 	var POLLGRIDDEFAULT = {
 			columns:[],								// row 数组 配置对象 例如：{title: 'id', width: 110, sortable: true, dataIndex: 'id'}	
 
@@ -107,7 +107,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 			staticData: [],							// 选择池 静态数据 
 
 			checkable:false,						// 是否复选框 checkbox
-			isShowCheckboxText: false, 				// checkbox情况下，是否th表头是否显示 全选 字符 和  checkbox 序号
+			isShowNoText: false, 					// checkbox情况下，是否th表头是否显示 全选 字符 和 checkbox 序号
 			
 			isPagination:true,						// 是否有分页 默认 有
 
@@ -130,7 +130,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 			config = S.merge(POLLGRIDDEFAULT, config);
 
 		if(!container){
-			throw 'please assign the id of rendered Dom, of the container of this grid!';
+			throw 'please assign the id of rendered Dom, of the container of this SimpleGrid!';
 			return;
 		}	
 
@@ -151,7 +151,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 	SimpleGrid.events = [
 		/**  
 		* 开始附加数据
-		* @name Grid#beginappend 
+		* @name SimpleGrid#beginappend 
 		* @event  
 		* @param {event} e  事件对象
 		* @param {Array} e.data 附加显示的数据
@@ -160,7 +160,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 		
 		/**  
 		* 附加数据完成
-		* @name Grid#afterappend 
+		* @name SimpleGrid#afterappend 
 		* @event  
 		* @param {event} e  事件对象
 		* @param {Array} e.data 附加显示的数据
@@ -170,7 +170,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 开始显示数据，一般是数据源加载完数据，开始在表格上显示数据
-		* @name Grid#beginshow
+		* @name SimpleGrid#beginshow
 		* @event  
 		* @param {event} e  事件对象
 		*/			
@@ -178,7 +178,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 显示数据完成，一般是数据源加载完数据，并在表格上显示完成
-		* @name Grid#aftershow
+		* @name SimpleGrid#aftershow
 		* @event  
 		* @param {event} e  事件对象
 		*/
@@ -186,7 +186,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 移除行，一般是数据源移除数据后，表格移除对应的行数据
-		* @name Grid#rowremoved
+		* @name SimpleGrid#rowremoved
 		* @event  
 		* @param {event} e  事件对象
 		* @param {Object} e.data 行对应的记录
@@ -196,7 +196,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 添加行，一般是数据源添加数据、加载数据后，表格显示对应的行后触发
-		* @name Grid#rowcreated
+		* @name SimpleGrid#rowcreated
 		* @event  
 		* @param {event} e  事件对象
 		* @param {Object} e.data 行对应的记录
@@ -206,7 +206,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 翻页前触发 引自 mui/Pagination 分页, 转发分页事件
-		* @name Grid# afterPageChanged
+		* @name SimpleGrid# afterPageChanged
 		* @event  
 		* @return 分页信息对象
 		*/
@@ -214,7 +214,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 行点击事件
-		* @name Grid#rowclick
+		* @name SimpleGrid#rowclick
 		* @event  
 		* @param {event} e  事件对象
 		* @param {Object} e.data 行对应的记录
@@ -225,7 +225,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 单元格点击事件
-		* @name Grid#cellclick
+		* @name SimpleGrid#cellclick
 		* @event  
 		* @param {event} e  事件对象
 		* @param {Object} e.data 行对应的记录
@@ -235,7 +235,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 行双击事件
-		* @name Grid#rowdblclick
+		* @name SimpleGrid#rowdblclick
 		* @event  
 		* @param {event} e  事件对象
 		* @param {Object} e.data 行对应的记录
@@ -246,7 +246,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 单元格双击事件
-		* @name Grid#celldblclick
+		* @name SimpleGrid#celldblclick
 		* @event  
 		* @param {event} e  事件对象
 		* @param {Object} e.data 行对应的记录
@@ -256,7 +256,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 行选中事件
-		* @name Grid#rowselected
+		* @name SimpleGrid#rowselected
 		* @event  
 		* @param {event} e  事件对象
 		* @param {Object} e.data 行对应的记录
@@ -266,7 +266,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 行取消选中事件
-		* @name Grid#rowunselected
+		* @name SimpleGrid#rowunselected
 		* @event  
 		* @param {event} e  事件对象
 		* @param {Object} e.data 行对应的记录
@@ -276,7 +276,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 行选中状态改变事件
-		* @name Grid#rowselectchanged
+		* @name SimpleGrid#rowselectchanged
 		* @event  
 		* @param {event} e  事件对象
 		* @param {Object} e.data 行对应的记录
@@ -287,14 +287,14 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**  
 		* 全选事件 发生
-		* @name Grid#allRowsSelected
+		* @name SimpleGrid#allRowsSelected
 		* @event  
 		*/
 		'allRowsSelected',
 
 		/**  
 		* 取消全选事件 发生
-		* @name Grid#unAllRowsSelected
+		* @name SimpleGrid#unAllRowsSelected
 		* @event  
 		*/
 		'unAllRowsSelected'
@@ -337,6 +337,12 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 			}).on('mouseout', function (event) {
 				_self._rowOutEvent(event.target);
 			});		
+
+			// row 双击事件
+			S.one(_self.tbody).on('dblclick', function(event){
+				_self._rowDoubleClickEvent(event.target);
+			});
+						
 
 			// 转发 分页事件 afterPageChange --> afterPageChanged
 			_self.pagination && _self.pagination.on('afterPageChange', function(e) {
@@ -556,7 +562,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 				defWidth,
 				aindex = '';
 
-			if(_self.get('isShowCheckboxText')){
+			if(_self.get('isShowNoText')){
 				defWidth = CHECKBOXW;
 				index = ++index;
 				aindex = currentPage === 1 ? index : pageSize*(currentPage-1) + index;
@@ -564,7 +570,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 				defWidth = CHECKBOXS;
 			}
 				
-			return '<td width="'+defWidth+'" class="'+clscell+emptyTd+CHECKBOX_TD_INDEX+'"><input type="checkbox" value="" name="checkboxs" class="'+clsCheck+'">'+aindex+'</td>';
+			return '<td width="'+defWidth+'" class="'+clscell+emptyTd+CHECKBOX_TD_INDEX+'"><input type="checkbox" value="" name="checkboxs" class="'+clsCheck+'" />'+aindex+'</td>';
 		},	
 
 		/**
@@ -585,12 +591,12 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 				cellTemp = null,
 				thTpl = '',
 				emptyTd = ' ',
-				defWidth = _self.get('isShowCheckboxText') ? CHECKBOXW : CHECKBOXS,	
-				selectAllText = _self.get('isShowCheckboxText') ? '全选': ''; // 是否显示 全选 字符
+				defWidth = _self.get('isShowNoText') ? CHECKBOXW : CHECKBOXS,	
+				selectAllText = _self.get('isShowNoText') ? '全选': ''; // 是否显示 全选 字符
 			
 			// 复选框	
 			if( _self.get('checkable') ){
-				thTpl = '<th width="'+defWidth+'" class="'+CLS_GRID_TH + emptyTd +'"><input type="checkbox" value="" name="checkboxs" class="'+SELECTALLCLS+'" data-field="">'+selectAllText+'</th>';
+				thTpl = '<th width="'+defWidth+'" class="'+CLS_GRID_TH + emptyTd +'"><input type="checkbox" value="" name="checkboxs" class="'+SELECTALLCLS+'" data-field="" />'+selectAllText+'</th>';
 				cellTempArray.push(thTpl);
 			}		
 
@@ -639,8 +645,6 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 			return thAry.join('');
 		},	
-
-		
 		
 		// 根据 数据勾选状态, 自动判断 全选与否 显示状态
 		autoSelect: function(ev){
@@ -648,12 +652,13 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 				type = 	ev.type;
 
 			if(type === 'rowselected'){
-				_self._isAllRowsSelected() && _self._setHeaderChecked(true);
+				_self.isAllRowsSelected() && _self._setHeaderChecked(true);
 			}else{
 				_self._setHeaderChecked(false); 
 			}
 		},
 
+		// 前端排序
 		sortableFn: function(ev){
 			var _self = this,				
 				direction = '',
@@ -663,7 +668,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 				dataType = DOM.attr(ev, 'data-dataType'),
 				isSort = DOM.hasClass(itagIndex, DRECTION_TAGS);	
 
-			var isAllRowsSelected = _self._isAllRowsSelected(),
+			var isAllRowsSelected = _self.isAllRowsSelected(),
 				selectAry = _self.getSelection();	
 				
 			if(!isSort){
@@ -691,11 +696,11 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 				_self._setAllRowsSelected(true);
 			}else{
 				_self._setHeaderChecked(false);
-				_self._setDataSelect(selectAry, true);
+				_self.setDataSelect(selectAry, true);
 			}
 		},
 		
-		// 根据路径 获取对象值
+		// 根据路径 获取对象值 -- 支持深层次嵌套
 		_getFieldValue: function(obj, dataIndex){
 			var _self = this;
 
@@ -754,14 +759,14 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 			}else if(_self.get('staticData')){	
 				_self.store.setResult( _self.get('staticData') );				
 			}else{
-				throw 'Grid Data Source Error!';
+				throw 'SimpleGrid Data Source Error!';
 			}	
 			
 			// 设置Grid Body的 宽高 度
 			if(width) { 			
 				_self.setWidth(width);
 			}
-			if (height) { 			
+			if(height) { 			
 				_self.setHeight(height);
 			}
 
@@ -769,7 +774,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 			_self._topScrollFn();
 		},
 		
-		// 初始化Store jsonp
+		// 初始化Store
 		_initStore: function(data){
 			var _self = this,
 				dataType = _self.get('isJsonp') ? 'jsonp': 'json';
@@ -780,7 +785,8 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 				dataType: dataType,
 				limit: _self.get('pageSize'), 
 				localSort: _self.get('isLocalSort'),
-				isPagination: _self.get('isPagination') 
+				isPagination: _self.get('isPagination'),
+				dataField: _self.get('dataField') 
 				// localPagination: _self.get('isLocalPagination')	
 			});
 			
@@ -814,10 +820,10 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 				}
 			});
 
-			// 添加数据时触发该事件
+			// 添加数据时触发该事件 -- 后续增强
 			_self.store.on('addrecords', function (event) {
 				var data = event.data;
-				_self.appendData(data);
+				// _self.appendData(data);
 			});
 
 			// 删除数据是触发该事件
@@ -904,7 +910,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 			return endVaue;
 		},
 
-		// 添加分页
+		// 实例化分页组件
 		addPagePation: function(container){
 			var _self = this;
 
@@ -924,7 +930,7 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 		    });
 		},
 
-		// 手动 强制 设定 分页总数
+		// 手动 强制 设定/修正 分页总数
 		_enforcePageTal: function(totalPage){
 			var _self = this,
 				totalPage = _self.store.getTotalPage(),
@@ -966,7 +972,13 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 			}
 		},
 				
-		// 查找 row
+		/*
+		* 根据 td 查找相应的 row 
+		* @method _findRow(element)
+		* @param {element}
+		* @return {row}
+		* @example  SimpleGrid._findRow(element);
+		**/
 		_findRow: function (element) {
 			return this._lookupByClass(element, CLS_GRID_ROW);
 		},	
@@ -1032,12 +1044,14 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 				row = _self._findRow(target),
 				cell = _self._findCell(target),
 				data = null;
+
 			if (row) {
 				data = DOM.data(row, DATA_ELEMENT);
+
 				if(cell) {
 					_self.fire('celldblclick', {data : data, row : row, cell : cell, field : DOM.attr(cell, ATTR_COLUMN_FIELD), domTarget : target});
 				}
-				_self.fire('rowdblclick', {data : data, row : row});
+				_self.fire('rowdblclick', {"data": data, "row": row});
 			}
 		},
 		
@@ -1061,9 +1075,10 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 		},		
 		
 		/**
-		* 显示数据
+		* 仅仅只 显示 表格数据(不启用Store管理对象、无自动分页功能) 
+		* @method showData(data)
 		* @param {Array} data 显示的数据
-		* 
+		* @example SimpleGrid.showData([{"a":1,"b":2}]);
 		*/		
 		showData : function (data) {
 			var _self = this,
@@ -1077,15 +1092,16 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 				trs.push(_self._createRow(obj, index));
 			});
 
-			// _self._afterShow(); 自适应宽高 方法
-			
 			DOM.html(_self.tbody, trs.join(''));
 			
 			_self.fire('aftershow');
 		},
 
 		/**
-		* 清空表格
+		* 清空表格数据
+		* @method clearData();
+		* @param {} 
+		* @example SimpleGrid.clearData();
 		*/
 		clearData : function(){
 			var _self = this,
@@ -1116,7 +1132,6 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 				dom = rowEl.getDOMNode();
 
 			DOM.data(dom, DATA_ELEMENT, element);
-
 			_self.fire('rowcreated',{data: element, row: dom});
 
             return rowTemplate;
@@ -1124,8 +1139,8 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 
 		/**
 		* 移除数据
-		* @private
-		* @param {Array} data 移除的数据
+		* @method 
+		* @param {Array} data 移除的数据  -- 后续扩展
 		* 
 		*/
 		removeData : function (data) {
@@ -1142,20 +1157,22 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 		},
 
 		/**
-		* 附加数据 不依赖store 根据数据渲染表格
 		* @private
-		* @param {Array} data 添加到表格上的数据
+		* @param {Array} data 添加到表格上的数据 --- 后续功能
 		*/
 		appendData : function (data) {
 			var _self = this,
 				rows = [];
-				// count = _self._getRowCount();
 
-			_self.fire('beginappend',{data : data});
+			_self.fire('beginappend', {data : data});
+
 			S.each(data, function (obj, index) {
-				var row = _self._createRow(obj, index);  // count + index
+				var row = _self._createRow(obj, index);
+
+				DOM.append(_self.tbody, row);   
 				rows.push(row);
 			});
+
 			_self.fire('afterappend', {rows : rows, data : data});
 		},
 
@@ -1180,13 +1197,17 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
     	},
 		
 		/**
-		* 取消 当前页面 所有 选中 状态 
+		* 设定 当前表格页面 全部选中 状态 
+		* @method setAllSelection(select);
+		* @param {boolean} 
+		* @return {null}
+		* @example SimpleGrid.setAllSelection(false);
 		*/
-		clearSelection : function(){
+		setAllSelection : function(select){
 			var _self = this;
 			
-			_self._setAllRowsSelected(false);
-			_self._setHeaderChecked(false);
+			_self._setAllRowsSelected(select);
+			_self._setHeaderChecked(select);
 		},
 		
 				
@@ -1217,8 +1238,14 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 			}
 		},
 
-		// 根据 传入data --- 设定表格中的 对应的row选中状态
-		_setDataSelect: function(data, isSelected){
+		/*
+		* 根据 传入data --- 设定表格中的 对应的row选中状态 默认比较数据 id
+		* @method  setDataSelect(data, isSelected);
+		* @param {obj || array} 设定数据
+		* @param {boolean} 是否选中
+		* @example SimpleGrid.setDataSelect({"a":3}, true);
+		**/ 
+		setDataSelect: function(data, isSelected){
 			var _self = this;
 
 			if(!data || isSelected == undefined){
@@ -1229,10 +1256,10 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 			data = S.isArray(data) ? data : [data];
 
 			S.each(data, function(obj){
-				transition(obj, isSelected);
+				Filter(obj, isSelected);
 			});
 			
-			function transition(obj, isSelected){
+			function Filter(obj, isSelected){
 				S.each(_self.tbody.rows, function(row){
 					_self._setLockRecords(row, obj, isSelected);
 				});
@@ -1250,8 +1277,15 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 			}		
 		},
 		
-		// 锁定rows状态
-		_isLocalRows: function(rows, isDisabled){
+		/**
+		* 锁定rows checkbox 状态
+		* @method isLocalRows(rows, isDisabled)
+		* @param {rows} trRow 单个 或 数组
+		* @param {isDisabled} Boolean 是否锁定操作
+		* @example SimpleGrid.isLocalRows(row, true);
+		* @return {null} 
+		*/
+		isLocalRows: function(rows, isDisabled){
 			var _self = this;
 			
 			rows = S.isArray(rows) ? rows : [rows];
@@ -1267,7 +1301,14 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 			});						
 		},
 
-		// 设定选中情况 及 锁定情况
+		/**
+		* 设定选中情况 及 锁定情况
+		* @method setSelectLock
+		* @param {row} trRow
+		* @param {isDisabled} Boolean 是否锁定操作
+		* @example SimpleGrid.isLocalRows(row, true);
+		* @return {null} 
+		*/
 		setSelectLock: function(row, selected){
 			var _self = this,
 				checkbox = DOM.get('.'+CLS_CHECKBOX, row),
@@ -1280,12 +1321,17 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 			
 			// 设定选中 及 锁定 状态
 			_self._setRowSelected(row, selected);		
-			_self._isLocalRows(row, selected);	
+			_self.isLocalRows(row, selected);	
 		},
 
 
-		//是否row全部选中
-		_isAllRowsSelected: function(){
+		/*
+		* 是否row全部选中
+		* @method isAllRowsSelected();
+		* @return {boolean}
+		* @example SimpleGrid.isAllRowsSelected();
+		**/
+		isAllRowsSelected: function(){
 			var _self = this,
 				rows = _self.tbody.rows,
 				val = true;
@@ -1305,7 +1351,9 @@ KISSY.add('gallery/SimpleGrid/1.0/index', function(S, XTemplate, Store, Paginati
 		
 		/**
 		* 获取选中的数据
+		* @method getSelection();
 		* @return {Array} 返回选中的数据
+		* @example SimpleGrid.getSelection();
 		*/
 		getSelection : function(){
 			var _self = this,
@@ -1369,10 +1417,11 @@ return SimpleGrid;
 }, {'requires':['xtemplate', './lib/store', './lib/pagination/pagination', './lib/uicommon', 'sizzle', './lib/grid.css']}); 
 
 /**
-* 已知问题：
+* 后续升级问题：
 * safari 纵向滚动条 导致的 th标题 与 td内容 对齐 存在 15左右像素偏差 
-* 点击排序 后 单选 回显 问题 
+* 点击排序 后 单选 回显 没实现 
 * 当动态隐藏 某列 时候 存在 th td 对齐偏差，建议第一次就渲染好列，不要动态改动
-* 
+* 暂没开放 表格 增删改 功能 有bug
+* 支持 tr 自定义模板
 **/
 
